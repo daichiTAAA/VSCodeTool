@@ -27,14 +27,12 @@
 The Serving Endpoints API allows you to create, update, and delete model serving endpoints.
 You can use a serving endpoint to serve models from the Databricks Model Registry or from Unity Catalog. Endpoints expose the underlying models as scalable REST API endpoints using serverless compute. This means the endpoints and associated compute resources are fully managed by Azure Databricks and will not appear in your cloud account. A serving endpoint can consist of one or more MLflow models from the Databricks Model Registry, called served entities. A serving endpoint can have at most ten served entities. You can configure traffic settings to define how requests should be routed to your served entities behind an endpoint. Additionally, you can configure the scale of resources that should be applied to each served entity.
 ### Get all serving endpoints
-`GET /api/2.0/serving-endpoints`
-
-Get all serving endpoints.
-
-API scope: `serving.serving-endpoints`
+* `GET /api/2.0/serving-endpoints`
+* Get all serving endpoints.
+* API scope: `serving.serving-endpoints`
 
 #### Responses
-##### 200 Request completed successfully.
+##### `200 Request completed successfully.`
 Request completed successfully.
 
 ###### `endpoints`
@@ -221,9 +219,9 @@ Error responses are returned in the following format:
 ```
 
 ### Get a single serving endpoint
-`GET /api/2.0/serving-endpoints/{name}`
-Retrieves the details for a single serving endpoint.
-API scope: `serving.serving-endpoints`
+* `GET /api/2.0/serving-endpoints/{name}`
+* Retrieves the details for a single serving endpoint.
+* API scope: `serving.serving-endpoints`
 #### Path parameters
 ##### `name`
 * required string [ 1 .. 63 ] characters
@@ -231,7 +229,7 @@ API scope: `serving.serving-endpoints`
 * The name of the serving endpoint. This field is required.
 
 #### Responses
-##### 200 Request completed successfully.
+##### `200 Request completed successfully.`
 Request completed successfully.
 ###### `ai_gateway`
 * object
@@ -280,21 +278,22 @@ Request completed successfully.
 * Enum: CAN_MANAGE | CAN_QUERY | CAN_VIEW
 * Example "CAN_MANAGE"
 The permission level of the principal making the request.
-###### route_optimized
+###### `route_optimized`
 * boolean
 * Example true
 * Boolean representing if route optimization has been enabled for the endpoint
-###### state
+###### `state`
 * object
 * Information corresponding to the state of the serving endpoint.
-###### tags
+###### `tags`
 * Array of object
 * Tags attached to the serving endpoint.
-###### task
+###### `task`
 * string
 * Example "model-serving-task"
 * The task type of the serving endpoint.
-* This method might return the following HTTP codes: 401, 404, 500
+  
+##### This method might return the following HTTP codes: 401, 404, 500
 
 ##### Response samples
 
@@ -685,170 +684,152 @@ The permission level of the principal making the request.
 ```
 
 ### Get the schema for a serving endpoint
-Public preview
-`GET /api/2.0/serving-endpoints/{name}/openapi`
-Get the query schema of the serving endpoint in OpenAPI format. The schema contains information for the supported paths, input and output format and datatypes.
-API scope: `serving.serving-endpoints`
+* Public preview
+* `GET /api/2.0/serving-endpoints/{name}/openapi`
+* Get the query schema of the serving endpoint in OpenAPI format. The schema contains information for the supported paths, input and output format and datatypes.
+* API scope: `serving.serving-endpoints`
 #### Path parameters
 ##### `name`
 * required string [1..63]
 * Example "feed-ads"
 * The name of the serving endpoint that the served model belongs to.
 #### Responses
-200 
-Request completed successfully.
-Request completed successfully.
-This method might return the following HTTP codes: 401, 500
+##### `200 Request completed successfully.`
+* Request completed successfully.
+
+##### This method might return the following HTTP codes: 401, 500
 
 ### Query a serving endpoint
-`POST /serving-endpoints/{name}/invocations`
-Query a serving endpoint
-API scope: `serving.serving-endpoints`
+* `POST /serving-endpoints/{name}/invocations`
+* Query a serving endpoint
+* API scope: `serving.serving-endpoints`
 #### Path parameters
 ##### `name`
 * required string
 * The name of the serving endpoint. Provided via the path parameter.
 #### Request body
-client_request_id
-string
-Optional user-provided request identifier that will be recorded in the inference table and the usage tracking table.
-dataframe_records
-Array of object
-Pandas Dataframe input in the records orientation.
-dataframe_split
-object
-Pandas Dataframe input in the split orientation.
-extra_params
-object
-Public preview
-The extra parameters field used ONLY for completions, chat, and embeddings external & foundation model serving endpoints. This is a map of strings and should only be used with other external/foundation model query fields.
-input
-object
-Public preview
-The input string (or array of strings) field used ONLY for embeddings external & foundation model serving endpoints and is the only field (along with extra_params if needed) used by embeddings queries.
-inputs
-object
-Tensor-based input in columnar format.
-instances
-Array of object
-Tensor-based input in row format.
-max_tokens
-int32
-Public preview
-Example 100
-The max tokens field used ONLY for completions and chat external & foundation model serving endpoints. This is an integer and should only be used with other chat/completions query fields.
-messages
-Array of object
-Public preview
-The messages field used ONLY for chat external & foundation model serving endpoints. This is an array of ChatMessage objects and should only be used with other chat query fields.
-n
-int32
-Public preview
-Example 5
-The n (number of candidates) field used ONLY for completions and chat external & foundation model serving endpoints. This is an integer between 1 and 5 with a default of 1 and should only be used with other chat/completions query fields.
-prompt
-object
-Public preview
-The prompt string (or array of strings) field used ONLY for completions external & foundation model serving endpoints and should only be used with other completions query fields.
-stop
-Array of string
-Public preview
-The stop sequences field used ONLY for completions and chat external & foundation model serving endpoints. This is a list of strings and should only be used with other chat/completions query fields.
-stream
-boolean
-Public preview
-Example true
-The stream field used ONLY for completions and chat external & foundation model serving endpoints. This is a boolean defaulting to false and should only be used with other chat/completions query fields.
-temperature
-double
-Public preview
-Example 0.5
-The temperature field used ONLY for completions and chat external & foundation model serving endpoints. This is a float between 0.0 and 2.0 with a default of 1.0 and should only be used with other chat/completions query fields.
-usage_context
-object
-Optional user-provided context that will be recorded in the usage tracking table.
+##### `client_request_id`
+* string
+* Optional user-provided request identifier that will be recorded in the inference table and the usage tracking table.
+##### `dataframe_records`
+* Array of object
+* Pandas Dataframe input in the records orientation.
+##### `dataframe_split`
+* object
+* Pandas Dataframe input in the split orientation.
+##### `extra_params`
+* object
+* Public preview
+* The extra parameters field used ONLY for completions, chat, and embeddings external & foundation model serving endpoints. This is a map of strings and should only be used with other external/foundation model query fields.
+##### `input`
+* object
+* Public preview
+* The input string (or array of strings) field used ONLY for embeddings external & foundation model serving endpoints and is the only field (along with extra_params if needed) used by embeddings queries.
+##### `inputs`
+* object
+* Tensor-based input in columnar format.
+##### `instances`
+* Array of object
+* Tensor-based input in row format.
+##### `max_tokens`
+* int32
+* Public preview
+* Example 100
+* The max tokens field used ONLY for completions and chat external & foundation model serving endpoints. This is an integer and should only be used with other chat/completions query fields.
+##### `messages`
+* Array of object
+* Public preview
+* The messages field used ONLY for chat external & foundation model serving endpoints. This is an array of ChatMessage objects and should only be used with other chat query fields.
+##### `n`
+* int32
+* Public preview
+* Example 5
+* The n (number of candidates) field used ONLY for completions and chat external & foundation model serving endpoints. This is an integer between 1 and 5 with a default of 1 and should only be used with other chat/completions query fields.
+##### `prompt`
+* object
+* Public preview
+* The prompt string (or array of strings) field used ONLY for completions external & foundation model serving endpoints and should only be used with other completions query fields.
+##### `stop`
+* Array of string
+* Public preview
+* The stop sequences field used ONLY for completions and chat external & foundation model serving endpoints. This is a list of strings and should only be used with other chat/completions query fields.
+##### `stream`
+* boolean
+* Public preview
+* Example true
+* The stream field used ONLY for completions and chat external & foundation model serving endpoints. This is a boolean defaulting to false and should only be used with other chat/completions query fields.
+##### `temperature`
+* number
+* Public preview
+* Example 0.5
+* The temperature field used ONLY for completions and chat external & foundation model serving endpoints. This is a float between 0.0 and 2.0 with a default of 1.0 and should only be used with other chat/completions query fields.
+##### `usage_context`
+* object
+* Optional user-provided context that will be recorded in the usage tracking table.
 #### Responses
-200 
-Request completed successfully.
-Request completed successfully.
-Response Headers
-served-model-name
-string
-The name of the served model that served the request. This is useful when there are multiple models behind the same endpoint with traffic split.
-choices
-Array of object
-Public preview
-The list of choices returned by the chat or completions external/foundation model serving endpoint.
-created
-int64
-Public preview
-Example 1699617587
-The timestamp in seconds when the query was created in Unix time returned by a completions or chat external/foundation model serving endpoint.
-data
-Array of object
-Public preview
-The list of the embeddings returned by the embeddings external/foundation model serving endpoint.
-id
-string
-Public preview
-Example "88fd3f75a0d24b0380ddc40484d7a31b"
-The ID of the query that may be returned by a completions or chat external/foundation model serving endpoint.
-model
-string
-Public preview
-Example "gpt-4"
-The name of the external/foundation model used for querying. This is the name of the model that was specified in the endpoint config.
-object
-string
-Public preview
-Enum: text_completion | chat.completion | list
-The type of object returned by the external/foundation model serving endpoint, one of [text_completion, chat.completion, list (of embeddings)].
-predictions
-Array of object
-The predictions returned by the serving endpoint.
-usage
-object
-Public preview
-The usage object that may be returned by the external/foundation model serving endpoint. This contains information about the number of tokens used in the prompt and response.
-This method might return the following HTTP codes: 401, 403, 404, 500
-##### Request samples
-JSON
+##### `200 Request completed successfully.`
+* Request completed successfully.
+###### Response Headers
+###### `served-model-name`
+* string
+* The name of the served model that served the request. This is useful when there are multiple models behind the same endpoint with traffic split.
+###### `choices`
+* Array of object
+* Public preview
+* The list of choices returned by the chat or completions external/foundation model serving endpoint.
+###### `created`
+* int64
+* Public preview
+* Example 1699617587
+* The timestamp in seconds when the query was created in Unix time returned by a completions or chat external/foundation model serving endpoint.
+###### `data`
+* Array of object
+* Public preview
+* The list of the embeddings returned by the embeddings external/foundation model serving endpoint.
+###### `id`
+* string
+* Public preview
+* Example "88fd3f75a0d24b0380ddc40484d7a31b"
+* The ID of the query that may be returned by a completions or chat external/foundation model serving endpoint.
+###### `model`
+* string
+* Public preview
+* Example "gpt-4"
+* The name of the external/foundation model used for querying. This is the name of the model that was specified in the endpoint config.
+###### `object`
+* string
+* Public preview
+* Enum: text_completion | chat.completion | list
+* The type of object returned by the external/foundation model serving endpoint, one of [text_completion, chat.completion, list (of embeddings)].
+###### `predictions`
+* Array of object
+* The predictions returned by the serving endpoint.
+###### `usage`
+* object
+* Public preview
+* The usage object that may be returned by the external/foundation model serving endpoint. This contains information about the number of tokens used in the prompt and response.
 
-Dataframe input in split orientation
+##### This method might return the following HTTP codes: 401, 403, 404, 500
+
+##### Request samples
+* JSON
+* Chat External/Foundation Model Endpoint
 
 ```json
 {
-  "dataframe_split": {
-    "columns": [
-      "sepal length (cm)",
-      "sepal width (cm)",
-      "petal length (cm)",
-      "petal width (cm)"
-    ],
-    "data": [
-      [
-        5.1,
-        3.5,
-        1.4,
-        0.2
-      ],
-      [
-        4.9,
-        3,
-        1.4,
-        0.2
-      ]
-    ],
-    "index": [
-      0,
-      1
-    ]
-  }
+  "max_tokens": 100,
+  "messages": [
+    {
+      "content": "What is mlflow?",
+      "role": "user"
+    }
+  ],
+  "temperature": 0.1
 }
 ```
-Response samples
+##### Response samples
 
-Chat External/Foundation Model Endpoint
+* Chat External/Foundation Model Endpoint
 
 ```json
 {
