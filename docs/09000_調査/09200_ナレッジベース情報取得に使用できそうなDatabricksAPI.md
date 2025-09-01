@@ -24,8 +24,8 @@
 
 # Real-Time Serving
 ## Serving endpoints
-The Serving Endpoints API allows you to create, update, and delete model serving endpoints.
-You can use a serving endpoint to serve models from the Databricks Model Registry or from Unity Catalog. Endpoints expose the underlying models as scalable REST API endpoints using serverless compute. This means the endpoints and associated compute resources are fully managed by Azure Databricks and will not appear in your cloud account. A serving endpoint can consist of one or more MLflow models from the Databricks Model Registry, called served entities. A serving endpoint can have at most ten served entities. You can configure traffic settings to define how requests should be routed to your served entities behind an endpoint. Additionally, you can configure the scale of resources that should be applied to each served entity.
+* The Serving Endpoints API allows you to create, update, and delete model serving endpoints.
+* You can use a serving endpoint to serve models from the Databricks Model Registry or from Unity Catalog. Endpoints expose the underlying models as scalable REST API endpoints using serverless compute. This means the endpoints and associated compute resources are fully managed by Azure Databricks and will not appear in your cloud account. A serving endpoint can consist of one or more MLflow models from the Databricks Model Registry, called served entities. A serving endpoint can have at most ten served entities. You can configure traffic settings to define how requests should be routed to your served entities behind an endpoint. Additionally, you can configure the scale of resources that should be applied to each served entity.
 ### Get all serving endpoints
 * `GET /api/2.0/serving-endpoints`
 * Get all serving endpoints.
@@ -1775,34 +1775,33 @@ Sets default schema for statement execution, similar to USE SCHEMA in SQL.
 ```
 
 ### Get status, manifest, and result first chunk
-`GET /api/2.0/sql/statements/{statement_id}`
-This request can be used to poll for the statement's status. When the status.state field is SUCCEEDED it will also return the result manifest and the first chunk of the result data. When the statement is in the terminal states CANCELED, CLOSED or FAILED, it returns HTTP 200 with the state set. After at least 12 hours in terminal state, the statement is removed from the warehouse and further calls will receive an HTTP 404 response.
-NOTE This call currently might take up to 5 seconds to get the latest status and result.
-API scope: `sql.statement-execution`
+* `GET /api/2.0/sql/statements/{statement_id}`
+* This request can be used to poll for the statement's status. When the status.state field is SUCCEEDED it will also return the result manifest and the first chunk of the result data. When the statement is in the terminal states CANCELED, CLOSED or FAILED, it returns HTTP 200 with the state set. After at least 12 hours in terminal state, the statement is removed from the warehouse and further calls will receive an HTTP 404 response.
+* NOTE This call currently might take up to 5 seconds to get the latest status and result.
+* API scope: `sql.statement-execution`
 #### Path parameters
-statement_id
-required
-string
-The statement ID is returned upon successfully submitting a SQL statement, and is a required reference for all subsequent calls.
+##### `statement_id`
+* required string
+* The statement ID is returned upon successfully submitting a SQL statement, and is a required reference for all subsequent calls.
 #### Responses
 ##### `200 Request completed successfully.`
 * StatementResponse contains `statement_id` and `status`; other fields might be absent or present depending on context. In case of an error during execution of the SQL statement -- as opposed to an error while processing the request -- a 200 response is returned with error details in the `status` field.
-manifest
-object
-The result manifest provides schema and metadata for the result set.
-result
-object
-Contains the result data of a single chunk when using INLINE disposition. When using EXTERNAL_LINKS disposition, the array external_links is used instead to provide SAS URLs to the result data in cloud storage. Exactly one of these alternatives is used. (While the external_links array prepares the API to return multiple links in a single response. Currently only a single link is returned.)
-statement_id
-string
-The statement ID is returned upon successfully submitting a SQL statement, and is a required reference for all subsequent calls.
-status
-object
-The status response includes execution state and if relevant, error information.
-#### This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
-#### Response samples
+###### `manifest`
+* object
+* The result manifest provides schema and metadata for the result set.
+###### `result`
+* object
+* Contains the result data of a single chunk when using INLINE disposition. When using EXTERNAL_LINKS disposition, the array external_links is used instead to provide SAS URLs to the result data in cloud storage. Exactly one of these alternatives is used. (While the external_links array prepares the API to return multiple links in a single response. Currently only a single link is returned.)
+###### `statement_id`
+* string
+* The statement ID is returned upon successfully submitting a SQL statement, and is a required reference for all subsequent calls.
+###### `status`
+* object
+* The status response includes execution state and if relevant, error information.
+##### This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
+##### Response samples
 
-Statement failed with syntax errror
+* Statement failed with syntax errror
 
 ```json
 {
@@ -1818,59 +1817,56 @@ Statement failed with syntax errror
 ```
 
 ### Cancel statement execution
-`POST /api/2.0/sql/statements/{statement_id}/cancel`
-Requests that an executing statement be canceled. Callers must poll for status to see the terminal state.
+* `POST /api/2.0/sql/statements/{statement_id}/cancel`
+* Requests that an executing statement be canceled. Callers must poll for status to see the terminal state.
 API scope: `sql.statement-execution`
 #### Path parameters
-statement_id
-required
-string
-The statement ID is returned upon successfully submitting a SQL statement, and is a required reference for all subsequent calls.
+##### `statement_id`
+* required string
+* The statement ID is returned upon successfully submitting a SQL statement, and is a required reference for all subsequent calls.
 #### Responses
 ##### `200 Request completed successfully.`
 * Cancel response is empty; receiving response indicates successful receipt.
-#### This method might return the following HTTP codes: 400, 401, 403, 429, 500, 503
+##### This method might return the following HTTP codes: 400, 401, 403, 429, 500, 503
 
 ### Get result chunk by index
-`GET /api/2.0/sql/statements/{statement_id}/result/chunks/{chunk_index}`
-After the statement execution has SUCCEEDED, this request can be used to fetch any chunk by index. Whereas the first chunk with chunk_index=0 is typically fetched with statementexecution/executestatement or statementexecution/getstatement, this request can be used to fetch subsequent chunks. The response structure is identical to the nested result element described in the statementexecution/getstatement request, and similarly includes the next_chunk_index and next_chunk_internal_link fields for simple iteration through the result set.
-API scope: `sql.statement-execution`
+* `GET /api/2.0/sql/statements/{statement_id}/result/chunks/{chunk_index}`
+* After the statement execution has SUCCEEDED, this request can be used to fetch any chunk by index. Whereas the first chunk with chunk_index=0 is typically fetched with statementexecution/executestatement or statementexecution/getstatement, this request can be used to fetch subsequent chunks. The response structure is identical to the nested result element described in the statementexecution/getstatement request, and similarly includes the next_chunk_index and next_chunk_internal_link fields for simple iteration through the result set.
+* API scope: `sql.statement-execution`
 #### Path parameters
-statement_id
-required
-string
-The statement ID is returned upon successfully submitting a SQL statement, and is a required reference for all subsequent calls.
-chunk_index
-required
-int32
+##### `statement_id`
+* required string
+* The statement ID is returned upon successfully submitting a SQL statement, and is a required reference for all subsequent calls.
+##### `chunk_index`
+* required int32
 #### Responses
 ##### `200 Request completed successfully.`
 * Successful return; depending on `disposition` returns chunks of data either inline, or as links.
-byte_count
-int64
-The number of bytes in the result chunk. This field is not available when using INLINE disposition.
-chunk_index
-integer
-The position within the sequence of result set chunks.
-data_array
-Array of Array of string
-The JSON_ARRAY format is an array of arrays of values, where each non-null value is formatted as a string. Null values are encoded as JSON null.
-external_links
-Array of object
-next_chunk_index
-integer
-When fetching, provides the chunk_index for the next chunk. If absent, indicates there are no more chunks. The next chunk can be fetched with a statementexecution/getstatementresultchunkn request.
-next_chunk_internal_link
-string
-When fetching, provides a link to fetch the next chunk. If absent, indicates there are no more chunks. This link is an absolute path to be joined with your $DATABRICKS_HOST, and should be treated as an opaque link. This is an alternative to using next_chunk_index.
-row_count
-int64
-The number of rows within the result chunk.
-row_offset
-int64
-The starting row offset within the result set.
-#### This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
-#### Response samples
+###### `byte_count`
+* int64
+* The number of bytes in the result chunk. This field is not available when using INLINE disposition.
+###### `chunk_index`
+* integer
+* The position within the sequence of result set chunks.
+###### `data_array`
+* Array of Array of string
+* The JSON_ARRAY format is an array of arrays of values, where each non-null value is formatted as a string. Null values are encoded as JSON null.
+###### `external_links`
+* Array of object
+###### `next_chunk_index`
+* integer
+* When fetching, provides the chunk_index for the next chunk. If absent, indicates there are no more chunks. The next chunk can be fetched with a statementexecution/getstatementresultchunkn request.
+###### `next_chunk_internal_link`
+* string
+* When fetching, provides a link to fetch the next chunk. If absent, indicates there are no more chunks. This link is an absolute path to be joined with your $DATABRICKS_HOST, and should be treated as an opaque link. This is an alternative to using next_chunk_index.
+###### `row_count`
+* int64
+* The number of rows within the result chunk.
+###### `row_offset`
+* int64
+* The starting row offset within the result set.
+##### This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
+##### Response samples
 
 EXTERNAL_LINKS, has next chunk
 
@@ -1893,32 +1889,30 @@ EXTERNAL_LINKS, has next chunk
 
 # AI/BI
 ## Genie
-Public preview
-Genie provides a no-code experience for business users, powered by AI/BI. Analysts set up spaces that business users can use to ask questions using natural language. Genie uses data registered to Unity Catalog and requires at least CAN USE permission on a Pro or Serverless SQL warehouse. Also, Databricks Assistant must be enabled.
+* Public preview
+* Genie provides a no-code experience for business users, powered by AI/BI. Analysts set up spaces that business users can use to ask questions using natural language. Genie uses data registered to Unity Catalog and requires at least CAN USE permission on a Pro or Serverless SQL warehouse. Also, Databricks Assistant must be enabled.
 ### List Genie spaces
-Public preview
-`GET /api/2.0/genie/spaces`
-Get list of Genie Spaces.
-API scope: `dashboards.genie`
+* Public preview
+* `GET /api/2.0/genie/spaces`
+* Get list of Genie Spaces.
+* API scope: `dashboards.genie`
 #### Query parameters
-page_size
-int32
-<= 100
-Default 20
-Maximum number of spaces to return per page
-page_token
-string
-Pagination token for getting the next page of results
+##### `page_size`
+* int32 (<= 100, default 20)
+* Maximum number of spaces to return per page
+##### `page_token`
+* string
+* Pagination token for getting the next page of results
 #### Responses
 ##### `200 Request completed successfully.`
-next_page_token
-string
-Token to get the next page of results
-spaces
-Array of object
-List of Genie spaces
-#### This method might return the following HTTP codes: 400, 401, 403, 404, 500
-#### Response samples
+###### `next_page_token`
+* string
+* Token to get the next page of results
+###### `spaces`
+* Array of object
+* List of Genie spaces
+##### This method might return the following HTTP codes: 400, 401, 403, 404, 500
+##### Response samples
 
 ```json
 {
@@ -1934,30 +1928,29 @@ List of Genie spaces
 ```
 
 ### Get Genie Space
-Public preview
-`GET /api/2.0/genie/spaces/{space_id}`
-Get details of a Genie Space.
-API scope: `dashboards.genie`
+* Public preview
+* `GET /api/2.0/genie/spaces/{space_id}`
+* Get details of a Genie Space.
+* API scope: `dashboards.genie`
 #### Path parameters
-space_id
-required
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-The ID associated with the Genie space
+##### `space_id`
+* required uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* The ID associated with the Genie space
 #### Responses
 ##### `200 Request completed successfully.`
-description
-string
-Description of the Genie Space
-space_id
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-Genie space ID
-title
-string
-Title of the Genie Space
-#### This method might return the following HTTP codes: 400, 401, 403, 404, 500
-#### Response samples
+###### `description`
+* string
+* Description of the Genie Space
+###### `space_id`
+* uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Genie space ID
+###### `title`
+* string
+* Title of the Genie Space
+##### This method might return the following HTTP codes: 400, 401, 403, 404, 500
+##### Response samples
 
 ```json
 {
@@ -1968,25 +1961,25 @@ Title of the Genie Space
 ```
 
 ### List conversations in a Genie Space
-Public preview
-`GET /api/2.0/genie/spaces/{space_id}/conversations`
-Get a list of conversations in a Genie Space.
-API scope: `dashboards.genie`
+* Public preview
+* `GET /api/2.0/genie/spaces/{space_id}/conversations`
+* Get a list of conversations in a Genie Space.
+* API scope: `dashboards.genie`
 #### Path parameters
-space_id
-required
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-The ID of the Genie space to retrieve conversations from.
+##### `space_id`
+* required
+* uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* The ID of the Genie space to retrieve conversations from.
 #### Query parameters
-page_size
-int32
-<= 100
-Default 20
-Maximum number of conversations to return per page
-page_token
-string
-Token to get the next page of results
+##### `page_size`
+* int32
+* <= 100
+* Default 20
+* Maximum number of conversations to return per page
+##### `page_token`
+* string
+* Token to get the next page of results
 #### Responses
 ##### `200 Request completed successfully.`
 * Request completed successfully.
@@ -2016,10 +2009,10 @@ Token to get the next page of results
 ```
 
 ### Create conversation message
-Public preview
-`POST /api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages`
-Create new message in a conversation. The AI response uses all previously created messages in the conversation to respond.
-API scope: `dashboards.genie`
+* Public preview
+* `POST /api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages`
+* Create new message in a conversation. The AI response uses all previously created messages in the conversation to respond.
+* API scope: `dashboards.genie`
 #### Path parameters
 ##### `space_id`
 * required uuid
@@ -2059,44 +2052,45 @@ API scope: `dashboards.genie`
 ###### `error`
 * object
 * Error message if Genie failed to respond to the message
-id
-uuid
-Deprecated
-Example "e1ef34712a29169db030324fd0e1df5f"
-Message ID. Legacy identifier, use message_id instead
-last_updated_timestamp
-int64
-Timestamp when the message was last updated
-message_id
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-Message ID
-query_result
-object
-Deprecated
-The result of SQL query if the message includes a query attachment. Deprecated. Use query_result_metadata in GenieQueryAttachment instead.
-space_id
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-Genie space ID
-status
-string
-Enum: FETCHING_METADATA | FILTERING_CONTEXT | ASKING_AI | PENDING_WAREHOUSE | EXECUTING_QUERY | FAILED | COMPLETED | SUBMITTED | QUERY_RESULT_EXPIRED | CANCELLED
-Example "ASKING_AI"
-MessageStatus. The possible values are:
-FETCHING_METADATA: Fetching metadata from the data sources.
-FILTERING_CONTEXT: Running smart context step to determine relevant context.
-ASKING_AI: Waiting for the LLM to respond to the user's question.
-PENDING_WAREHOUSE: Waiting for warehouse before the SQL query can start executing.
-EXECUTING_QUERY: Executing a generated SQL query. Get the SQL query result by calling getMessageAttachmentQueryResult API.
-FAILED: The response generation or query execution failed. See error field.
-COMPLETED: Message processing is completed. Results are in the attachments field. Get the SQL query result by calling getMessageAttachmentQueryResult API.
-SUBMITTED: Message has been submitted.
-QUERY_RESULT_EXPIRED: SQL result is not available anymore. The user needs to rerun the query. Rerun the SQL query result by calling executeMessageAttachmentQuery API.
-CANCELLED: Message has been cancelled.
-user_id
-int64
-ID of the user who created the message
+###### `id`
+* uuid
+* Deprecated
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Message ID. Legacy identifier, use message_id instead
+###### `last_updated_timestamp`
+* int64
+* Timestamp when the message was last updated
+
+###### `message_id`
+* uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Message ID
+###### `query_result`
+* object
+* Deprecated
+* The result of SQL query if the message includes a query attachment. Deprecated. Use query_result_metadata in GenieQueryAttachment instead.
+###### `space_id`
+* uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Genie space ID
+###### `status`
+* string
+* Enum: FETCHING_METADATA | FILTERING_CONTEXT | ASKING_AI | PENDING_WAREHOUSE | EXECUTING_QUERY | FAILED | COMPLETED | SUBMITTED | QUERY_RESULT_EXPIRED | CANCELLED
+* Example "ASKING_AI"
+* **MessageStatus. The possible values are:**
+  * FETCHING_METADATA: Fetching metadata from the data sources.
+  * FILTERING_CONTEXT: Running smart context step to determine relevant context.
+  * ASKING_AI: Waiting for the LLM to respond to the user's question.
+  * PENDING_WAREHOUSE: Waiting for warehouse before the SQL query can start executing.
+  * EXECUTING_QUERY: Executing a generated SQL query. Get the SQL query result by calling getMessageAttachmentQueryResult API.
+  * FAILED: The response generation or query execution failed. See error field.
+  * COMPLETED: Message processing is completed. Results are in the attachments field. Get the SQL query result by calling getMessageAttachmentQueryResult API.
+  * SUBMITTED: Message has been submitted.
+  * QUERY_RESULT_EXPIRED: SQL result is not available anymore. The user needs to rerun the query. Rerun the SQL query result by calling executeMessageAttachmentQuery API.
+  * CANCELLED: Message has been cancelled.
+###### `user_id`
+* int64
+* ID of the user who created the message
 #### This method might return the following HTTP codes: 400, 401, 403, 404, 500
 #### Request samples
 JSON
@@ -2127,10 +2121,10 @@ Message created
 ```
 
 ### Get conversation message
-Public preview
-`GET /api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}`
-Get message from conversation.
-API scope: `dashboards.genie`
+* Public preview
+* `GET /api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}`
+* Get message from conversation.
+* API scope: `dashboards.genie`
 #### Path parameters
 ##### `space_id`
 * required uuid
@@ -2146,65 +2140,65 @@ API scope: `dashboards.genie`
 * The ID associated with the target message from the identified conversation.
 #### Responses
 ##### `200 Request completed successfully.`
-attachments
-Array of object
-AI-generated response to the message
-content
-string
-Example "Biggest open opportunities"
-User message content
-conversation_id
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-Conversation ID
-created_timestamp
-int64
-Timestamp when the message was created
-error
-object
-Error message if Genie failed to respond to the message
-id
-uuid
-Deprecated
-Example "e1ef34712a29169db030324fd0e1df5f"
-Message ID. Legacy identifier, use message_id instead
-last_updated_timestamp
-int64
-Timestamp when the message was last updated
-message_id
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-Message ID
-query_result
-object
-Deprecated
-The result of SQL query if the message includes a query attachment. Deprecated. Use query_result_metadata in GenieQueryAttachment instead.
-space_id
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-Genie space ID
-status
-string
-Enum: FETCHING_METADATA | FILTERING_CONTEXT | ASKING_AI | PENDING_WAREHOUSE | EXECUTING_QUERY | FAILED | COMPLETED | SUBMITTED | QUERY_RESULT_EXPIRED | CANCELLED
-Example "ASKING_AI"
-MessageStatus. The possible values are:
-FETCHING_METADATA: Fetching metadata from the data sources.
-FILTERING_CONTEXT: Running smart context step to determine relevant context.
-ASKING_AI: Waiting for the LLM to respond to the user's question.
-PENDING_WAREHOUSE: Waiting for warehouse before the SQL query can start executing.
-EXECUTING_QUERY: Executing a generated SQL query. Get the SQL query result by calling getMessageAttachmentQueryResult API.
-FAILED: The response generation or query execution failed. See error field.
-COMPLETED: Message processing is completed. Results are in the attachments field. Get the SQL query result by calling getMessageAttachmentQueryResult API.
-SUBMITTED: Message has been submitted.
-QUERY_RESULT_EXPIRED: SQL result is not available anymore. The user needs to rerun the query. Rerun the SQL query result by calling executeMessageAttachmentQuery API.
-CANCELLED: Message has been cancelled.
-user_id
-int64
-ID of the user who created the message
+###### `attachments`
+* Array of object
+* AI-generated response to the message
+###### `content`
+* string
+* Example "Biggest open opportunities"
+* User message content
+###### `conversation_id`
+* uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Conversation ID
+###### `created_timestamp`
+* int64
+* Timestamp when the message was created
+###### `error`
+* object
+* Error message if Genie failed to respond to the message
+###### `id`
+* uuid
+* Deprecated
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Message ID. Legacy identifier, use message_id instead
+###### `last_updated_timestamp`
+* int64
+* Timestamp when the message was last updated
+###### `message_id`
+* uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Message ID
+###### `query_result`
+* object
+* Deprecated
+* The result of SQL query if the message includes a query attachment. Deprecated. Use query_result_metadata in GenieQueryAttachment instead.
+###### `space_id`
+* uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Genie space ID
+###### `status`
+* string
+* Enum: FETCHING_METADATA | FILTERING_CONTEXT | ASKING_AI | PENDING_WAREHOUSE | EXECUTING_QUERY | FAILED | COMPLETED | SUBMITTED | QUERY_RESULT_EXPIRED | CANCELLED
+* Example "ASKING_AI"
+* **MessageStatus. The possible values are:**
+  * FETCHING_METADATA: Fetching metadata from the data sources.
+  * FILTERING_CONTEXT: Running smart context step to determine relevant context.
+  * ASKING_AI: Waiting for the LLM to respond to the user's question.
+  * PENDING_WAREHOUSE: Waiting for warehouse before the SQL query can start executing.
+  * EXECUTING_QUERY: Executing a generated SQL query. Get the SQL query result by calling getMessageAttachmentQueryResult API.
+  * FAILED: The response generation or query execution failed. See error field.
+  * COMPLETED: Message processing is completed. Results are in the attachments field. Get the SQL query result by calling getMessageAttachmentQueryResult API.
+  * SUBMITTED: Message has been submitted.
+  * QUERY_RESULT_EXPIRED: SQL result is not available anymore. The user needs to rerun the query. Rerun the SQL query result by calling executeMessageAttachmentQuery API.
+  * CANCELLED: Message has been cancelled.
+###### `user_id`
+* int64
+* ID of the user who created the message
 #### This method might return the following HTTP codes: 401, 403, 404, 500
 #### Response samples
 
-Message created
+* Message created
 
 ```json
 {
@@ -2223,10 +2217,10 @@ Message created
 ```
 
 ### Execute message attachment SQL query
-Public preview
-`POST /api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/attachments/{attachment_id}/execute-query`
-Execute the SQL for a message query attachment. Use this API when the query attachment has expired and needs to be re-executed.
-API scope: `dashboards.genie`
+* Public preview
+* `POST /api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/attachments/{attachment_id}/execute-query`
+* Execute the SQL for a message query attachment. Use this API when the query attachment has expired and needs to be re-executed.
+* API scope: `dashboards.genie`
 #### Path parameters
 ##### `space_id`
 * required uuid
@@ -2246,9 +2240,9 @@ API scope: `dashboards.genie`
 * Attachment ID
 #### Responses
 ##### `200 Request completed successfully.`
-statement_response
-object
-SQL Statement Execution response. See Get status, manifest, and result first chunk for more details.
+###### `statement_response`
+* object
+* SQL Statement Execution response. See Get status, manifest, and result first chunk for more details.
 #### This method might return the following HTTP codes: 400, 401, 403, 404, 500
 #### Response samples
 
@@ -2322,31 +2316,31 @@ SQL Statement Execution response. See Get status, manifest, and result first chu
 ```
 
 ### Get message attachment SQL query result
-Public preview
-`GET /api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/attachments/{attachment_id}/query-result`
-Get the result of SQL query if the message has a query attachment. This is only available if a message has a query attachment and the message status is EXECUTING_QUERY OR COMPLETED.
-API scope: `dashboards.genie`
+* Public preview
+* `GET /api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/attachments/{attachment_id}/query-result`
+* Get the result of SQL query if the message has a query attachment. This is only available if a message has a query attachment and * the message status is EXECUTING_QUERY OR COMPLETED.
+* API scope: `dashboards.genie`
 #### Path parameters
-space_id
-required
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-Genie space ID
-conversation_id
-required
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-Conversation ID
-message_id
-required
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-Message ID
-attachment_id
-required
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-Attachment ID
+##### `space_id`
+* required
+* uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Genie space ID
+##### `conversation_id`
+* required
+* uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Conversation ID
+##### `message_id`
+* required
+* uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Message ID
+##### `attachment_id`
+* required
+* uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Attachment ID
 #### Responses
 ##### `200 Request completed successfully.`
 * Request completed successfully.
@@ -2428,13 +2422,14 @@ Attachment ID
 ```
 
 ### Start conversation
-Public preview
-`POST /api/2.0/genie/spaces/{space_id}/start-conversation`
-Start a new conversation.
-API scope: `dashboards.genie`
+* Public preview
+* `POST /api/2.0/genie/spaces/{space_id}/start-conversation`
+* Start a new conversation.
+* API scope: `dashboards.genie`
 #### Path parameters
 ##### `space_id`
-* required uuid
+* required
+* uuid
 * Example "e1ef34712a29169db030324fd0e1df5f"
 * The ID associated with the Genie space where you want to start a conversation.
 #### Request body
@@ -2462,14 +2457,14 @@ API scope: `dashboards.genie`
 
 #### This method might return the following HTTP codes: 400, 401, 403, 404, 500
 #### Request samples
-JSON
+* JSON
 
 ```json
 {
   "content": "Give me top sales for last month"
 }
 ```
-Response samples
+#### Response samples
 
 ```json
 {
