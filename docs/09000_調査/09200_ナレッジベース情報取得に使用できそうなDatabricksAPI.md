@@ -39,7 +39,7 @@ Request completed successfully.
 * Array of object
 * The list of endpoints.
 
-##### This method might return the following HTTP codes: 401, 500
+#### This method might return the following HTTP codes: 401, 500
 
 Error responses are returned in the following format:
 
@@ -50,7 +50,7 @@ Error responses are returned in the following format:
 }
 ```
 
-##### Response samples
+#### Response samples
 
 ```json
 {
@@ -293,9 +293,9 @@ The permission level of the principal making the request.
 * Example "model-serving-task"
 * The task type of the serving endpoint.
   
-##### This method might return the following HTTP codes: 401, 404, 500
+#### This method might return the following HTTP codes: 401, 404, 500
 
-##### Response samples
+#### Response samples
 
 ```json
 {
@@ -697,7 +697,7 @@ The permission level of the principal making the request.
 ##### `200 Request completed successfully.`
 * Request completed successfully.
 
-##### This method might return the following HTTP codes: 401, 500
+#### This method might return the following HTTP codes: 401, 500
 
 ### Query a serving endpoint
 * `POST /serving-endpoints/{name}/invocations`
@@ -809,9 +809,9 @@ The permission level of the principal making the request.
 * Public preview
 * The usage object that may be returned by the external/foundation model serving endpoint. This contains information about the number of tokens used in the prompt and response.
 
-##### This method might return the following HTTP codes: 401, 403, 404, 500
+#### This method might return the following HTTP codes: 401, 403, 404, 500
 
-##### Request samples
+#### Request samples
 * JSON
 * Chat External/Foundation Model Endpoint
 
@@ -827,7 +827,7 @@ The permission level of the principal making the request.
   "temperature": 0.1
 }
 ```
-##### Response samples
+#### Response samples
 
 * Chat External/Foundation Model Endpoint
 
@@ -877,7 +877,7 @@ API scope: `vectorsearch.vector-search-endpoints`
 ###### `next_page_token`
 * string
 * A token that can be used to get the next page of results. If not present, there are no more results to show.
-##### Response samples
+#### Response samples
 
 ```json
 {
@@ -945,8 +945,8 @@ Name of the vector search endpoint
 num_indexes
 int32
 Number of indexes on the endpoint
-##### This method might return the following HTTP codes: 401, 404, 500
-##### Response samples
+#### This method might return the following HTTP codes: 401, 404, 500
+#### Response samples
 
 ```json
 {
@@ -988,8 +988,8 @@ string
 A token that can be used to get the next page of results. If not present, there are no more results to show.
 vector_indexes
 Array of object
-##### This method might return the following HTTP codes: 401, 404, 500
-##### Response samples
+#### This method might return the following HTTP codes: 401, 404, 500
+#### Response samples
 
 ```json
 {
@@ -1040,8 +1040,8 @@ string
 Primary key of the index
 status
 object
-##### This method might return the following HTTP codes: 400, 401, 404, 500
-##### Response samples
+#### This method might return the following HTTP codes: 400, 401, 404, 500
+#### Response samples
 
 Successful response for Delta Sync Index
 
@@ -1120,8 +1120,8 @@ string
 result
 object
 Data returned in the query result.
-##### This method might return the following HTTP codes: 400, 401, 404, 500
-##### Request samples
+#### This method might return the following HTTP codes: 400, 401, 404, 500
+#### Request samples
 JSON
 
 Query using text
@@ -1135,7 +1135,7 @@ Query using text
   "query_text": "Databricks Vector Search"
 }
 ```
-##### Response samples
+#### Response samples
 
 ```json
 {
@@ -1199,8 +1199,8 @@ string
 result
 object
 Data returned in the query result.
-##### This method might return the following HTTP codes: 400, 401, 404, 500
-##### Request samples
+#### This method might return the following HTTP codes: 400, 401, 404, 500
+#### Request samples
 JSON
 
 ```json
@@ -1209,7 +1209,7 @@ JSON
   "page_token": "dummy-page-token"
 }
 ```
-##### Response samples
+#### Response samples
 
 ```json
 {
@@ -1269,8 +1269,8 @@ List of data entries
 last_primary_key
 string
 Primary key of the last entry.
-##### This method might return the following HTTP codes: 400, 401, 404, 500
-##### Request samples
+#### This method might return the following HTTP codes: 400, 401, 404, 500
+#### Request samples
 JSON
 
 First scan request
@@ -1280,7 +1280,7 @@ First scan request
   "num_results": 2
 }
 ```
-##### Response samples
+#### Response samples
 
 ```json
 {
@@ -1380,8 +1380,8 @@ API scope: `sql.queries`
 ###### `results`
 * Array of object
 
-##### This method might return the following HTTP codes: 400, 401, 500
-##### Response samples
+#### This method might return the following HTTP codes: 400, 401, 500
+#### Response samples
 
 ```json
 {
@@ -1510,8 +1510,8 @@ warehouse_id
 string
 Example "a7066a8ef796be84"
 ID of the SQL warehouse attached to the query.
-##### This method might return the following HTTP codes: 400, 401, 403, 404, 500
-##### Response samples
+#### This method might return the following HTTP codes: 400, 401, 403, 404, 500
+#### Response samples
 
 ```json
 {
@@ -1686,8 +1686,8 @@ The statement ID is returned upon successfully submitting a SQL statement, and i
 status
 object
 The status response includes execution state and if relevant, error information.
-##### This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
-##### Request samples
+#### This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
+#### Request samples
 JSON
 
 Asynchronous execution
@@ -1699,7 +1699,7 @@ Asynchronous execution
   "warehouse_id": "abcdef0123456789"
 }
 ```
-##### Response samples
+#### Response samples
 
 Statement failed with syntax errror
 
@@ -1740,8 +1740,8 @@ The statement ID is returned upon successfully submitting a SQL statement, and i
 status
 object
 The status response includes execution state and if relevant, error information.
-##### This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
-##### Response samples
+#### This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
+#### Response samples
 
 Statement failed with syntax errror
 
@@ -1770,7 +1770,7 @@ The statement ID is returned upon successfully submitting a SQL statement, and i
 #### Responses
 ##### `200 Request completed successfully.`
 * Cancel response is empty; receiving response indicates successful receipt.
-##### This method might return the following HTTP codes: 400, 401, 403, 429, 500, 503
+#### This method might return the following HTTP codes: 400, 401, 403, 429, 500, 503
 
 ### Get result chunk by index
 `GET /api/2.0/sql/statements/{statement_id}/result/chunks/{chunk_index}`
@@ -1810,8 +1810,8 @@ The number of rows within the result chunk.
 row_offset
 int64
 The starting row offset within the result set.
-##### This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
-##### Response samples
+#### This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
+#### Response samples
 
 EXTERNAL_LINKS, has next chunk
 
@@ -1858,8 +1858,8 @@ Token to get the next page of results
 spaces
 Array of object
 List of Genie spaces
-##### This method might return the following HTTP codes: 400, 401, 403, 404, 500
-##### Response samples
+#### This method might return the following HTTP codes: 400, 401, 403, 404, 500
+#### Response samples
 
 ```json
 {
@@ -1897,8 +1897,8 @@ Genie space ID
 title
 string
 Title of the Genie Space
-##### This method might return the following HTTP codes: 400, 401, 403, 404, 500
-##### Response samples
+#### This method might return the following HTTP codes: 400, 401, 403, 404, 500
+#### Response samples
 
 ```json
 {
@@ -1940,8 +1940,8 @@ Token to get the next page of results
 * string
 * Token to get the next page of results
 
-##### This method might return the following HTTP codes: 400, 401, 403, 404, 500
-##### Response samples
+#### This method might return the following HTTP codes: 400, 401, 403, 404, 500
+#### Response samples
 
 ```json
 {
@@ -2038,8 +2038,8 @@ CANCELLED: Message has been cancelled.
 user_id
 int64
 ID of the user who created the message
-##### This method might return the following HTTP codes: 400, 401, 403, 404, 500
-##### Request samples
+#### This method might return the following HTTP codes: 400, 401, 403, 404, 500
+#### Request samples
 JSON
 
 ```json
@@ -2047,7 +2047,7 @@ JSON
   "content": "Give me top sales for last month"
 }
 ```
-##### Response samples
+#### Response samples
 
 Message created
 
@@ -2142,8 +2142,8 @@ CANCELLED: Message has been cancelled.
 user_id
 int64
 ID of the user who created the message
-##### This method might return the following HTTP codes: 401, 403, 404, 500
-##### Response samples
+#### This method might return the following HTTP codes: 401, 403, 404, 500
+#### Response samples
 
 Message created
 
@@ -2190,8 +2190,8 @@ API scope: `dashboards.genie`
 statement_response
 object
 SQL Statement Execution response. See Get status, manifest, and result first chunk for more details.
-##### This method might return the following HTTP codes: 400, 401, 403, 404, 500
-##### Response samples
+#### This method might return the following HTTP codes: 400, 401, 403, 404, 500
+#### Response samples
 
 ```json
 {
@@ -2296,8 +2296,8 @@ Attachment ID
 * object
 * SQL Statement Execution response. See Get status, manifest, and result first chunk for more details.
 
-##### This method might return the following HTTP codes: 400, 401, 403, 404, 500
-##### Response samples
+#### This method might return the following HTTP codes: 400, 401, 403, 404, 500
+#### Response samples
 
 ```json
 {
@@ -2401,8 +2401,8 @@ API scope: `dashboards.genie`
 * Example "e1ef34712a29169db030324fd0e1df5f"
 * Message ID
 
-##### This method might return the following HTTP codes: 400, 401, 403, 404, 500
-##### Request samples
+#### This method might return the following HTTP codes: 400, 401, 403, 404, 500
+#### Request samples
 JSON
 
 ```json
