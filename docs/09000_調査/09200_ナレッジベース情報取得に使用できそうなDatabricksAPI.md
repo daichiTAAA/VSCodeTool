@@ -10,13 +10,24 @@
 # 出典
 [Databricks API Reference](https://docs.databricks.com/api/azure/workspace/introduction)
 
+# 目次
+- [Real-Time Serving](#real-time-serving)
+  - [Serving endpoints](#serving-endpoints)
+- [Vector Search](#vector-search)
+  - [Endpoints](#endpoints)
+  - [Indexes](#indexes)
+- [Databricks SQL](#databricks-sql)
+  - [Queries](#queries)
+  - [Statement Execution](#statement-execution)
+- [AI/BI](#aibi)
+  - [Genie](#genie)
+
 # Real-Time Serving
 ## Serving endpoints
 The Serving Endpoints API allows you to create, update, and delete model serving endpoints.
 You can use a serving endpoint to serve models from the Databricks Model Registry or from Unity Catalog. Endpoints expose the underlying models as scalable REST API endpoints using serverless compute. This means the endpoints and associated compute resources are fully managed by Azure Databricks and will not appear in your cloud account. A serving endpoint can consist of one or more MLflow models from the Databricks Model Registry, called served entities. A serving endpoint can have at most ten served entities. You can configure traffic settings to define how requests should be routed to your served entities behind an endpoint. Additionally, you can configure the scale of resources that should be applied to each served entity.
 ### Get all serving endpoints
-GET
-/api/2.0/serving-endpoints
+`GET /api/2.0/serving-endpoints`
 Get all serving endpoints.
 API scope: 
 serving.serving-endpoints
@@ -29,7 +40,8 @@ Array of object
 The list of endpoints.
 This method might return the following HTTP codes: 401, 500
 Response samples
-200
+
+```json
 {
   "endpoints": [
     {
@@ -193,10 +205,10 @@ Response samples
     }
   ]
 }
+```
 
 ### Get a single serving endpoint
-GET
-/api/2.0/serving-endpoints/{name}
+`GET /api/2.0/serving-endpoints/{name}`
 Retrieves the details for a single serving endpoint.
 API scope: 
 serving.serving-endpoints
@@ -274,7 +286,8 @@ Example "model-serving-task"
 The task type of the serving endpoint.
 This method might return the following HTTP codes: 401, 404, 500
 Response samples
-200
+
+```json
 {
   "ai_gateway": {
     "fallback_config": {
@@ -658,11 +671,11 @@ Response samples
   ],
   "task": "model-serving-task"
 }
+```
 
 ### Get the schema for a serving endpoint
 Public preview
-GET
-/api/2.0/serving-endpoints/{name}/openapi
+`GET /api/2.0/serving-endpoints/{name}/openapi`
 Get the query schema of the serving endpoint in OpenAPI format. The schema contains information for the supported paths, input and output format and datatypes.
 API scope: 
 serving.serving-endpoints
@@ -680,8 +693,7 @@ Request completed successfully.
 This method might return the following HTTP codes: 401, 500
 
 ### Query a serving endpoint
-POST
-/serving-endpoints/{name}/invocations
+`POST /serving-endpoints/{name}/invocations`
 Query a serving endpoint
 API scope: 
 serving.serving-endpoints
@@ -797,6 +809,8 @@ Request samples
 JSON
 
 Dataframe input in split orientation
+
+```json
 {
   "dataframe_split": {
     "columns": [
@@ -825,10 +839,12 @@ Dataframe input in split orientation
     ]
   }
 }
+```
 Response samples
-200
 
 Chat External/Foundation Model Endpoint
+
+```json
 {
   "choices": [
     {
@@ -850,13 +866,13 @@ Chat External/Foundation Model Endpoint
     "total_tokens": 81
   }
 }
+```
 
 # Vector Search
 ## Endpoints
 Endpoint: Represents the compute resources to host vector search indexes.
 ### List all endpoints
-GET
-/api/2.0/vector-search/endpoints
+`GET /api/2.0/vector-search/endpoints`
 List all vector search endpoints in the workspace.
 API scope: 
 vectorsearch.vector-search-endpoints
@@ -876,7 +892,8 @@ next_page_token
 string
 A token that can be used to get the next page of results. If not present, there are no more results to show.
 Response samples
-200
+
+```json
 {
   "endpoints": [
     {
@@ -896,10 +913,10 @@ Response samples
   ],
   "next_page_token": "string"
 }
+```
 
 ### Get an endpoint
-GET
-/api/2.0/vector-search/endpoints/{endpoint_name}
+`GET /api/2.0/vector-search/endpoints/{endpoint_name}`
 Get details for a single vector search endpoint.
 API scope: 
 vectorsearch.vector-search-endpoints
@@ -948,7 +965,8 @@ int32
 Number of indexes on the endpoint
 This method might return the following HTTP codes: 401, 404, 500
 Response samples
-200
+
+```json
 {
   "creation_timestamp": 1702013512061,
   "creator": "john@example.com",
@@ -963,6 +981,7 @@ Response samples
   "name": "docs-endpoint",
   "num_indexes": 0
 }
+```
 
 ## Indexes
 Index: An efficient representation of your embedding vectors that supports real-time and efficient approximate nearest neighbor (ANN) search queries.
@@ -970,8 +989,7 @@ There are 2 types of Vector Search indexes:
 Delta Sync Index: An index that automatically syncs with a source Delta Table, automatically and incrementally updating the index as the underlying data in the Delta Table changes.
 Direct Vector Access Index: An index that supports direct read and write of vectors and metadata through our REST and SDK APIs. With this model, the user manages index updates.
 ### List indexes
-GET
-/api/2.0/vector-search/indexes
+`GET /api/2.0/vector-search/indexes`
 List all indexes in the given endpoint.
 API scope: 
 vectorsearch.vector-search-indexes
@@ -994,7 +1012,8 @@ vector_indexes
 Array of object
 This method might return the following HTTP codes: 401, 404, 500
 Response samples
-200
+
+```json
 {
   "next_page_token": "string",
   "vector_indexes": [
@@ -1007,10 +1026,10 @@ Response samples
     }
   ]
 }
+```
 
 ### Get an index
-GET
-/api/2.0/vector-search/indexes/{index_name}
+`GET /api/2.0/vector-search/indexes/{index_name}`
 Get an index.
 API scope: 
 vectorsearch.vector-search-indexes
@@ -1049,9 +1068,10 @@ status
 object
 This method might return the following HTTP codes: 400, 401, 404, 500
 Response samples
-200
 
 Successful response for Delta Sync Index
+
+```json
 {
   "creator": "john@example.com",
   "delta_sync_index_spec": {
@@ -1076,10 +1096,10 @@ Successful response for Delta Sync Index
     "ready": false
   }
 }
+```
 
 ### Query an index
-POST
-/api/2.0/vector-search/indexes/{index_name}/query
+`POST /api/2.0/vector-search/indexes/{index_name}/query`
 Query the specified vector index.
 API scope: 
 vectorsearch.vector-search-indexes
@@ -1135,6 +1155,8 @@ Request samples
 JSON
 
 Query using text
+
+```json
 {
   "columns": [
     "id"
@@ -1142,8 +1164,10 @@ Query using text
   "num_results": 20,
   "query_text": "Databricks Vector Search"
 }
+```
 Response samples
-200
+
+```json
 {
   "manifest": {
     "column_count": 3,
@@ -1175,10 +1199,10 @@ Response samples
     "row_count": 1
   }
 }
+```
 
 ### Query next page
-POST
-/api/2.0/vector-search/indexes/{index_name}/query-next-page
+`POST /api/2.0/vector-search/indexes/{index_name}/query-next-page`
 Use next_page_token returned from previous QueryVectorIndex or QueryVectorIndexNextPage request to fetch next page of results.
 API scope: 
 vectorsearch.vector-search-indexes
@@ -1211,12 +1235,16 @@ Data returned in the query result.
 This method might return the following HTTP codes: 400, 401, 404, 500
 Request samples
 JSON
+
+```json
 {
   "endpoint_name": "demo-endpoint",
   "page_token": "dummy-page-token"
 }
+```
 Response samples
-200
+
+```json
 {
   "manifest": {
     "column_count": 3,
@@ -1248,10 +1276,10 @@ Response samples
     "row_count": 1
   }
 }
+```
 
 ### Scan an index
-POST
-/api/2.0/vector-search/indexes/{index_name}/scan
+`POST /api/2.0/vector-search/indexes/{index_name}/scan`
 Scan the specified vector index and return the first num_results entries after the exclusive primary_key.
 API scope: 
 vectorsearch.vector-search-indexes
@@ -1282,11 +1310,15 @@ Request samples
 JSON
 
 First scan request
+
+```json
 {
   "num_results": 2
 }
+```
 Response samples
-200
+
+```json
 {
   "data": [
     {
@@ -1360,13 +1392,13 @@ Response samples
   ],
   "last_primary_key": "2"
 }
+```
 
 # Databricks SQL
 ## Queries
 The queries API can be used to perform CRUD operations on queries. A query is a Databricks SQL object that includes the target SQL warehouse, query text, name, description, tags, and parameters. Queries can be scheduled using the sql_task type of the Jobs API, e.g. jobs/create.
 ### List queries
-GET
-/api/2.0/sql/queries
+`GET /api/2.0/sql/queries`
 Gets a list of queries accessible to the user, ordered by creation time. Warning: Calling this API concurrently 10 or more times could result in throttling, service degradation, or a temporary ban.
 API scope: 
 sql.queries
@@ -1388,7 +1420,8 @@ results
 Array of object
 This method might return the following HTTP codes: 400, 401, 500
 Response samples
-200
+
+```json
 {
   "next_page_token": "eDg",
   "results": [
@@ -1444,10 +1477,10 @@ Response samples
     }
   ]
 }
+```
 
 ### Get a query
-GET
-/api/2.0/sql/queries/{id}
+`GET /api/2.0/sql/queries/{id}`
 Gets a query.
 API scope: 
 sql.queries
@@ -1521,7 +1554,8 @@ Example "a7066a8ef796be84"
 ID of the SQL warehouse attached to the query.
 This method might return the following HTTP codes: 400, 401, 403, 404, 500
 Response samples
-200
+
+```json
 {
   "create_time": "2019-08-24T14:15:22Z",
   "description": "Example description",
@@ -1548,6 +1582,7 @@ Response samples
   "update_time": "2019-08-24T14:15:22Z",
   "warehouse_id": "a7066a8ef796be84"
 }
+```
 
 ## Statement Execution
 The Databricks SQL Statement Execution API can be used to execute SQL statements on a SQL warehouse and fetch the result.
@@ -1585,8 +1620,7 @@ To guarantee that the statement is kept alive, you must poll at least once every
 The results are only available for one hour after success; polling does not extend this.
 The SQL Execution API must be used for the entire lifecycle of the statement. For example, you cannot use the Jobs API to execute the command, and then the SQL Execution API to cancel it.
 ### Execute a SQL statement
-POST
-/api/2.0/sql/statements/
+`POST /api/2.0/sql/statements/`
 Execute a SQL statement and optionally await its results for a specified time.
 Use case: small result sets with INLINE + JSON_ARRAY
 For flows that generate small and predictable result sets (<= 25 MiB), INLINE responses of JSON_ARRAY result data are typically the simplest way to execute and fetch result data.
@@ -1701,15 +1735,19 @@ Request samples
 JSON
 
 Asynchronous execution
+
+```json
 {
   "statement": "SELECT * FROM range(100)",
   "wait_timeout": "0s",
   "warehouse_id": "abcdef0123456789"
 }
+```
 Response samples
-200
 
 Statement failed with syntax errror
+
+```json
 {
   "statement_id": "01ee48eb-5124-1922-bb90-f98c82f024fe",
   "status": {
@@ -1720,9 +1758,9 @@ Statement failed with syntax errror
     "state": "FAILED"
   }
 }
+```
 ### Get status, manifest, and result first chunk
-GET
-/api/2.0/sql/statements/{statement_id}
+`GET /api/2.0/sql/statements/{statement_id}`
 This request can be used to poll for the statement's status. When the status.state field is SUCCEEDED it will also return the result manifest and the first chunk of the result data. When the statement is in the terminal states CANCELED, CLOSED or FAILED, it returns HTTP 200 with the state set. After at least 12 hours in terminal state, the statement is removed from the warehouse and further calls will receive an HTTP 404 response.
 NOTE This call currently might take up to 5 seconds to get the latest status and result.
 API scope: 
@@ -1750,9 +1788,10 @@ object
 The status response includes execution state and if relevant, error information.
 This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
 Response samples
-200
 
 Statement failed with syntax errror
+
+```json
 {
   "statement_id": "01ee48eb-5124-1922-bb90-f98c82f024fe",
   "status": {
@@ -1763,10 +1802,10 @@ Statement failed with syntax errror
     "state": "FAILED"
   }
 }
+```
 
 ### Cancel statement execution
-POST
-/api/2.0/sql/statements/{statement_id}/cancel
+`POST /api/2.0/sql/statements/{statement_id}/cancel`
 Requests that an executing statement be canceled. Callers must poll for status to see the terminal state.
 API scope: 
 sql.statement-execution
@@ -1782,8 +1821,7 @@ Cancel response is empty; receiving response indicates successful receipt.
 This method might return the following HTTP codes: 400, 401, 403, 429, 500, 503
 
 ### Get result chunk by index
-GET
-/api/2.0/sql/statements/{statement_id}/result/chunks/{chunk_index}
+`GET /api/2.0/sql/statements/{statement_id}/result/chunks/{chunk_index}`
 After the statement execution has SUCCEEDED, this request can be used to fetch any chunk by index. Whereas the first chunk with chunk_index=0 is typically fetched with statementexecution/executestatement or statementexecution/getstatement, this request can be used to fetch subsequent chunks. The response structure is identical to the nested result element described in the statementexecution/getstatement request, and similarly includes the next_chunk_index and next_chunk_internal_link fields for simple iteration through the result set.
 API scope: 
 sql.statement-execution
@@ -1824,9 +1862,10 @@ int64
 The starting row offset within the result set.
 This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
 Response samples
-200
 
 EXTERNAL_LINKS, has next chunk
+
+```json
 {
   "external_links": [
     {
@@ -1841,6 +1880,7 @@ EXTERNAL_LINKS, has next chunk
     }
   ]
 }
+```
 
 # AI/BI
 ## Genie
@@ -1848,8 +1888,7 @@ Public preview
 Genie provides a no-code experience for business users, powered by AI/BI. Analysts set up spaces that business users can use to ask questions using natural language. Genie uses data registered to Unity Catalog and requires at least CAN USE permission on a Pro or Serverless SQL warehouse. Also, Databricks Assistant must be enabled.
 ### List Genie spaces
 Public preview
-GET
-/api/2.0/genie/spaces
+`GET /api/2.0/genie/spaces`
 Get list of Genie Spaces.
 API scope: 
 dashboards.genie
@@ -1874,7 +1913,8 @@ Array of object
 List of Genie spaces
 This method might return the following HTTP codes: 400, 401, 403, 404, 500
 Response samples
-200
+
+```json
 {
   "next_page_token": "string",
   "spaces": [
@@ -1885,11 +1925,11 @@ Response samples
     }
   ]
 }
+```
 
 ### Get Genie Space
 Public preview
-GET
-/api/2.0/genie/spaces/{space_id}
+`GET /api/2.0/genie/spaces/{space_id}`
 Get details of a Genie Space.
 API scope: 
 dashboards.genie
@@ -1915,17 +1955,18 @@ string
 Title of the Genie Space
 This method might return the following HTTP codes: 400, 401, 403, 404, 500
 Response samples
-200
+
+```json
 {
   "description": "string",
   "space_id": "e1ef34712a29169db030324fd0e1df5f",
   "title": "string"
 }
+```
 
 ### List conversations in a Genie Space
 Public preview
-GET
-/api/2.0/genie/spaces/{space_id}/conversations
+`GET /api/2.0/genie/spaces/{space_id}/conversations`
 Get a list of conversations in a Genie Space.
 API scope: 
 dashboards.genie
@@ -1956,7 +1997,8 @@ string
 Token to get the next page of results
 This method might return the following HTTP codes: 400, 401, 403, 404, 500
 Response samples
-200
+
+```json
 {
   "conversations": [
     {
@@ -1967,11 +2009,11 @@ Response samples
   ],
   "next_page_token": "string"
 }
+```
 
 ### Create conversation message
 Public preview
-POST
-/api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages
+`POST /api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages`
 Create new message in a conversation. The AI response uses all previously created messages in the conversation to respond.
 API scope: 
 dashboards.genie
@@ -2054,13 +2096,17 @@ ID of the user who created the message
 This method might return the following HTTP codes: 400, 401, 403, 404, 500
 Request samples
 JSON
+
+```json
 {
   "content": "Give me top sales for last month"
 }
+```
 Response samples
-200
 
 Message created
+
+```json
 {
   "attachments": null,
   "content": "Give me top sales for last month",
@@ -2074,11 +2120,11 @@ Message created
   "status": "IN_PROGRESS",
   "user_id": 12345
 }
+```
 
 ### Get conversation message
 Public preview
-GET
-/api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}
+`GET /api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}`
 Get message from conversation.
 API scope: 
 dashboards.genie
@@ -2159,9 +2205,10 @@ int64
 ID of the user who created the message
 This method might return the following HTTP codes: 401, 403, 404, 500
 Response samples
-200
 
 Message created
+
+```json
 {
   "attachments": null,
   "content": "Give me top sales for last month",
@@ -2175,11 +2222,11 @@ Message created
   "status": "IN_PROGRESS",
   "user_id": 12345
 }
+```
 
 ### Execute message attachment SQL query
 Public preview
-POST
-/api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/attachments/{attachment_id}/execute-query
+`POST /api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/attachments/{attachment_id}/execute-query`
 Execute the SQL for a message query attachment. Use this API when the query attachment has expired and needs to be re-executed.
 API scope: 
 dashboards.genie
@@ -2213,7 +2260,8 @@ object
 SQL Statement Execution response. See Get status, manifest, and result first chunk for more details.
 This method might return the following HTTP codes: 400, 401, 403, 404, 500
 Response samples
-200
+
+```json
 {
   "statement_response": {
     "manifest": {
@@ -2280,11 +2328,11 @@ Response samples
     }
   }
 }
+```
 
 ### Get message attachment SQL query result
 Public preview
-GET
-/api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/attachments/{attachment_id}/query-result
+`GET /api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/attachments/{attachment_id}/query-result`
 Get the result of SQL query if the message has a query attachment. This is only available if a message has a query attachment and the message status is EXECUTING_QUERY OR COMPLETED.
 API scope: 
 dashboards.genie
@@ -2318,7 +2366,8 @@ object
 SQL Statement Execution response. See Get status, manifest, and result first chunk for more details.
 This method might return the following HTTP codes: 400, 401, 403, 404, 500
 Response samples
-200
+
+```json
 {
   "statement_response": {
     "manifest": {
@@ -2385,11 +2434,11 @@ Response samples
     }
   }
 }
+```
 
 ### Start conversation
 Public preview
-POST
-/api/2.0/genie/spaces/{space_id}/start-conversation
+`POST /api/2.0/genie/spaces/{space_id}/start-conversation`
 Start a new conversation.
 API scope: 
 dashboards.genie
@@ -2424,11 +2473,15 @@ Message ID
 This method might return the following HTTP codes: 400, 401, 403, 404, 500
 Request samples
 JSON
+
+```json
 {
   "content": "Give me top sales for last month"
 }
+```
 Response samples
-200
+
+```json
 {
   "conversation": {
     "created_timestamp": 1719769718,
@@ -2452,3 +2505,4 @@ Response samples
     "user_id": 12345
   }
 }
+```
