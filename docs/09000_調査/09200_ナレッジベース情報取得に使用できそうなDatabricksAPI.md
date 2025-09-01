@@ -857,11 +857,11 @@ The permission level of the principal making the request.
 
 # Vector Search
 ## Endpoints
-Endpoint: Represents the compute resources to host vector search indexes.
+* Endpoint: Represents the compute resources to host vector search indexes.
 ### List all endpoints
-`GET /api/2.0/vector-search/endpoints`
-List all vector search endpoints in the workspace.
-API scope: `vectorsearch.vector-search-endpoints`
+* `GET /api/2.0/vector-search/endpoints`
+* List all vector search endpoints in the workspace.
+* API scope: `vectorsearch.vector-search-endpoints`
 #### Query parameters
 ##### `page_token`
 * string
@@ -902,49 +902,49 @@ API scope: `vectorsearch.vector-search-endpoints`
 ```
 
 ### Get an endpoint
-`GET /api/2.0/vector-search/endpoints/{endpoint_name}`
-Get details for a single vector search endpoint.
-API scope: `vectorsearch.vector-search-endpoints`
+* `GET /api/2.0/vector-search/endpoints/{endpoint_name}`
+* Get details for a single vector search endpoint.
+* API scope: `vectorsearch.vector-search-endpoints`
 #### Path parameters
 ##### `endpoint_name`
 * required string
 * Name of the endpoint
 #### Responses
 ##### `200 Request completed successfully.`
-creation_timestamp
-int64
-Example 1702013512061
-Timestamp of endpoint creation
-creator
-string
-Example "john@example.com"
-Creator of the endpoint
-endpoint_status
-object
-Current status of the endpoint
-endpoint_type
-string
-Enum: STANDARD
-Type of endpoint
-id
-string
-Example "c56bf0a9-4929-4bd4-8bd5-d82ca62f9c76"
-Unique identifier of the endpoint
-last_updated_timestamp
-int64
-Example 1702013512061
-Timestamp of last update to the endpoint
-last_updated_user
-string
-Example "john@example.com"
-User who last updated the endpoint
-name
-string
-Example "docs-endpoint"
-Name of the vector search endpoint
-num_indexes
-int32
-Number of indexes on the endpoint
+###### `creation_timestamp`
+* int64
+* Example 1702013512061
+* Timestamp of endpoint creation
+###### `creator`
+* string
+* Example "john@example.com"
+* Creator of the endpoint
+###### `endpoint_status`
+* object
+* Current status of the endpoint
+###### `endpoint_type`
+* string
+* Enum: STANDARD
+* Type of endpoint
+###### `id`
+* string
+* Example "c56bf0a9-4929-4bd4-8bd5-d82ca62f9c76"
+* Unique identifier of the endpoint
+###### `last_updated_timestamp`
+* int64
+* Example 1702013512061
+* Timestamp of last update to the endpoint
+###### `last_updated_user`
+* string
+* Example "john@example.com"
+* User who last updated the endpoint
+###### `name`
+* string
+* Example "docs-endpoint"
+* Name of the vector search endpoint
+###### `num_indexes`
+* int32
+* Number of indexes on the endpoint
 #### This method might return the following HTTP codes: 401, 404, 500
 #### Response samples
 
@@ -966,14 +966,14 @@ Number of indexes on the endpoint
 ```
 
 ## Indexes
-Index: An efficient representation of your embedding vectors that supports real-time and efficient approximate nearest neighbor (ANN) search queries.
-There are 2 types of Vector Search indexes:
-Delta Sync Index: An index that automatically syncs with a source Delta Table, automatically and incrementally updating the index as the underlying data in the Delta Table changes.
-Direct Vector Access Index: An index that supports direct read and write of vectors and metadata through our REST and SDK APIs. With this model, the user manages index updates.
+* Index: An efficient representation of your embedding vectors that supports real-time and efficient approximate nearest neighbor (ANN) search queries.
+* There are 2 types of Vector Search indexes:
+  * Delta Sync Index: An index that automatically syncs with a source Delta Table, automatically and incrementally updating the index as the underlying data in the Delta Table changes.
+  * Direct Vector Access Index: An index that supports direct read and write of vectors and metadata through our REST and SDK APIs. With this model, the user manages index updates.
 ### List indexes
-`GET /api/2.0/vector-search/indexes`
-List all indexes in the given endpoint.
-API scope: `vectorsearch.vector-search-indexes`
+* `GET /api/2.0/vector-search/indexes`
+* List all indexes in the given endpoint.
+* API scope: `vectorsearch.vector-search-indexes`
 #### Query parameters
 ##### `endpoint_name`
 * required string
@@ -983,11 +983,11 @@ API scope: `vectorsearch.vector-search-indexes`
 * Token for pagination
 #### Responses
 ##### `200 Request completed successfully.`
-next_page_token
-string
-A token that can be used to get the next page of results. If not present, there are no more results to show.
-vector_indexes
-Array of object
+###### `next_page_token`
+* string
+* A token that can be used to get the next page of results. If not present, there are no more results to show.
+###### `vector_indexes`
+* Array of object
 #### This method might return the following HTTP codes: 401, 404, 500
 #### Response samples
 
@@ -1007,43 +1007,42 @@ Array of object
 ```
 
 ### Get an index
-`GET /api/2.0/vector-search/indexes/{index_name}`
-Get an index.
-API scope: `vectorsearch.vector-search-indexes`
+* `GET /api/2.0/vector-search/indexes/{index_name}`
+* Get an index.
+* API scope: `vectorsearch.vector-search-indexes`
 #### Path parameters
 ##### `index_name`
 * required string
 * Name of the index
 #### Responses
 ##### `200 Request completed successfully.`
-creator
-string
-The user who created the index.
-delta_sync_index_spec
-object
-direct_access_index_spec
-object
-endpoint_name
-string
-Name of the endpoint associated with the index
-index_type
-string
-Enum: DELTA_SYNC | DIRECT_ACCESS
-There are 2 types of Vector Search indexes:
-DELTA_SYNC: An index that automatically syncs with a source Delta Table, automatically and incrementally updating the index as the underlying data in the Delta Table changes.
-DIRECT_ACCESS: An index that supports direct read and write of vectors and metadata through our REST and SDK APIs. With this model, the user manages index updates.
-name
-string
-Name of the index
-primary_key
-string
-Primary key of the index
-status
-object
+###### `creator`
+* string
+* The user who created the index.
+###### `delta_sync_index_spec`
+* object
+###### `direct_access_index_spec`
+* object
+* string
+###### `index_type`
+* required
+* string
+* Enum: DELTA_SYNC | DIRECT_ACCESS
+* There are 2 types of Vector Search indexes:
+* DELTA_SYNC: An index that automatically syncs with a source Delta Table, automatically and incrementally updating the index as the underlying data in the Delta Table changes.
+* DIRECT_ACCESS: An index that supports direct read and write of vectors and metadata through our REST and SDK APIs. With this model, the user manages index updates.
+###### `name`
+* string
+* Name of the index
+###### `primary_key`
+* string
+* Primary key of the index
+###### `status`
+* object
 #### This method might return the following HTTP codes: 400, 401, 404, 500
 #### Response samples
 
-Successful response for Delta Sync Index
+* Successful response for Delta Sync Index
 
 ```json
 {
@@ -1072,59 +1071,84 @@ Successful response for Delta Sync Index
 }
 ```
 
+* Successful response for Direct Vector Access Index
+```json
+{
+  "creator": "john@example.com",
+  "direct_access_index_spec": {
+    "embedding_vector_columns": [
+      {
+        "embedding_dimension": 1024,
+        "name": "text_vector"
+      }
+    ],
+    "schema_json": "{\"id\":\"int\",\"text\":\"string\",\"text_vector\":\"array<float>\"}"
+  },
+  "endpoint_name": "docs-endpoint",
+  "index_type": "DIRECT_ACCESS",
+  "name": "main_catalog.docs.en_wiki_index",
+  "primary_key": "id",
+  "status": {
+    "index_url": "demo.cloud.databricks.com/api/2.0/vector-search/endpoints/docs-endpoint/indexes/main_catalog.docs.en_wiki_index",
+    "indexed_row_count": 0,
+    "message": "Direct access index creation succeeded.",
+    "ready": true
+  }
+}
+```
+
 ### Query an index
-`POST /api/2.0/vector-search/indexes/{index_name}/query`
-Query the specified vector index.
-API scope: `vectorsearch.vector-search-indexes`
+* `POST /api/2.0/vector-search/indexes/{index_name}/query`
+* Query the specified vector index.
+* API scope: `vectorsearch.vector-search-indexes`
 #### Path parameters
 ##### `index_name`
 * required string
 * Name of the vector index to query.
 #### Request body
-columns
-required
-Array of string
-List of column names to include in the response.
-filters_json
-string
-JSON string representing query filters.
-Example filters:
-{"id <": 5}: Filter for id less than 5.
-{"id >": 5}: Filter for id greater than 5.
-{"id <=": 5}: Filter for id less than equal to 5.
-{"id >=": 5}: Filter for id greater than equal to 5.
-{"id": 5}: Filter for id equal to 5.
-num_results
-int32
-Number of results to return. Defaults to 10.
-query_text
-string
-Query text. Required for Delta Sync Index using model endpoint.
-query_type
-string
-The query type to use. Choices are ANN and HYBRID. Defaults to ANN.
-query_vector
-Array of double
-Query vector. Required for Direct Vector Access Index and Delta Sync Index using self-managed vectors.
-score_threshold
-double
-Threshold for the approximate nearest neighbor search. Defaults to 0.0.
+##### `columns`
+* required
+* Array of string
+* List of column names to include in the response.
+##### `filters_json`
+* string
+* JSON string representing query filters.
+* Example filters:
+  * {"id <": 5}: Filter for id less than 5.
+  * {"id >": 5}: Filter for id greater than 5.
+  * {"id <=": 5}: Filter for id less than equal to 5.
+  * {"id >=": 5}: Filter for id greater than equal to 5.
+  * {"id": 5}: Filter for id equal to 5.
+##### `num_results`
+* int32
+* Number of results to return. Defaults to 10.
+##### `query_text`
+* string
+* Query text. Required for Delta Sync Index using model endpoint.
+##### `query_type`
+* string
+* The query type to use. Choices are ANN and HYBRID. Defaults to ANN.
+##### `query_vector`
+* Array of double
+* Query vector. Required for Direct Vector Access Index and Delta Sync Index using self-managed vectors.
+##### `score_threshold`
+* double
+* Threshold for the approximate nearest neighbor search. Defaults to 0.0.
 #### Responses
 ##### `200 Request completed successfully.`
-manifest
-object
-Metadata about the result set.
-next_page_token
-string
-[Optional] Token that can be used in QueryVectorIndexNextPage API to get next page of results. If more than 1000 results satisfy the query, they are returned in groups of 1000. Empty value means no more results. The maximum number of results that can be returned is 10,000.
-result
-object
-Data returned in the query result.
+###### `manifest`
+* object
+* Metadata about the result set.
+###### `next_page_token`
+* string
+* [Optional] Token that can be used in QueryVectorIndexNextPage API to get next page of results. If more than 1000 results satisfy the query, they are returned in groups of 1000. Empty value means no more results. The maximum number of results that can be returned is 10,000.
+###### `result`
+* object
+* Data returned in the query result.
 #### This method might return the following HTTP codes: 400, 401, 404, 500
 #### Request samples
-JSON
-
-Query using text
+* JSON
+* Query using text
 
 ```json
 {
@@ -1172,16 +1196,16 @@ Query using text
 ```
 
 ### Query next page
-`POST /api/2.0/vector-search/indexes/{index_name}/query-next-page`
-Use next_page_token returned from previous QueryVectorIndex or QueryVectorIndexNextPage request to fetch next page of results.
-API scope: `vectorsearch.vector-search-indexes`
+* `POST /api/2.0/vector-search/indexes/{index_name}/query-next-page`
+* Use next_page_token returned from previous QueryVectorIndex or QueryVectorIndexNextPage request to fetch next page of results.
+* API scope: `vectorsearch.vector-search-indexes`
 #### Path parameters
-index_name
-required
-string
-Name of the vector index to query.
+##### `index_name`
+* required
+* string
+* Name of the vector index to query.
 #### Request body
-Request payload for getting next page of results.
+* Request payload for getting next page of results.
 ##### `endpoint_name`
 * string
 * Name of the endpoint.
@@ -1190,18 +1214,18 @@ Request payload for getting next page of results.
 * Page token returned from previous QueryVectorIndex or QueryVectorIndexNextPage API.
 #### Responses
 ##### `200 Request completed successfully.`
-manifest
-object
-Metadata about the result set.
-next_page_token
-string
-[Optional] Token that can be used in QueryVectorIndexNextPage API to get next page of results. If more than 1000 results satisfy the query, they are returned in groups of 1000. Empty value means no more results. The maximum number of results that can be returned is 10,000.
-result
-object
-Data returned in the query result.
+###### `manifest`
+* object
+* Metadata about the result set.
+###### `next_page_token`
+* string
+* [Optional] Token that can be used in QueryVectorIndexNextPage API to get next page of results. If more than 1000 results satisfy the query, they are returned in groups of 1000. Empty value means no more results. The maximum number of results that can be returned is 10,000.
+###### `result`
+* object
+* Data returned in the query result.
 #### This method might return the following HTTP codes: 400, 401, 404, 500
 #### Request samples
-JSON
+* JSON
 
 ```json
 {
@@ -1246,14 +1270,14 @@ JSON
 ```
 
 ### Scan an index
-`POST /api/2.0/vector-search/indexes/{index_name}/scan`
-Scan the specified vector index and return the first num_results entries after the exclusive primary_key.
-API scope: `vectorsearch.vector-search-indexes`
+* `POST /api/2.0/vector-search/indexes/{index_name}/scan`
+* Scan the specified vector index and return the first num_results entries after the exclusive primary_key.
+* API scope: `vectorsearch.vector-search-indexes`
 #### Path parameters
-index_name
-required
-string
-Name of the vector index to scan.
+##### `index_name`
+* required
+* string
+* Name of the vector index to scan.
 #### Request body
 ##### `last_primary_key`
 * string
@@ -1263,17 +1287,16 @@ Name of the vector index to scan.
 * Number of results to return. Defaults to 10.
 #### Responses
 ##### `200 Request completed successfully.`
-data
-Array of object
-List of data entries
-last_primary_key
-string
-Primary key of the last entry.
+###### `data`
+* Array of object
+* List of data entries
+###### `last_primary_key`
+* string
+* Primary key of the last entry.
 #### This method might return the following HTTP codes: 400, 401, 404, 500
 #### Request samples
-JSON
-
-First scan request
+* JSON
+* First scan request
 
 ```json
 {
@@ -1360,11 +1383,11 @@ First scan request
 
 # Databricks SQL
 ## Queries
-The queries API can be used to perform CRUD operations on queries. A query is a Databricks SQL object that includes the target SQL warehouse, query text, name, description, tags, and parameters. Queries can be scheduled using the sql_task type of the Jobs API, e.g. jobs/create.
+* The queries API can be used to perform CRUD operations on queries. A query is a Databricks SQL object that includes the target SQL warehouse, query text, name, description, tags, and parameters. Queries can be scheduled using the sql_task type of the Jobs API, e.g. jobs/create.
 ### List queries
-`GET /api/2.0/sql/queries`
-Gets a list of queries accessible to the user, ordered by creation time. Warning: Calling this API concurrently 10 or more times could result in throttling, service degradation, or a temporary ban.
-API scope: `sql.queries`
+* `GET /api/2.0/sql/queries`
+* Gets a list of queries accessible to the user, ordered by creation time. Warning: Calling this API concurrently 10 or more times could result in throttling, service degradation, or a temporary ban.
+* API scope: `sql.queries`
 #### Query parameters
 ##### `page_token`
 * string
@@ -1442,74 +1465,75 @@ API scope: `sql.queries`
 ```
 
 ### Get a query
-`GET /api/2.0/sql/queries/{id}`
-Gets a query.
-API scope: `sql.queries`
+* `GET /api/2.0/sql/queries/{id}`
+* Gets a query.
+* API scope: `sql.queries`
 #### Path parameters
 ##### `id`
 * required string
 #### Responses
 ##### `200 Request completed successfully.`
-apply_auto_limit
-boolean
-Whether to apply a 1000 row limit to the query result.
-catalog
-string
-Name of the catalog where this query will be executed.
-create_time
-date-time
-Timestamp when this query was created.
-description
-string
+###### `apply_auto_limit`
+* boolean
+* Whether to apply a 1000 row limit to the query result.
+###### `catalog`
+* string
+* Name of the catalog where this query will be executed.
+###### `create_time`
+* date-time
+* Timestamp when this query was created.
+###### `description`
+* string
 Example "Example description"
 General description that conveys additional information about this query such as usage notes.
-display_name
-string
+###### `display_name`
+* string
 Example "Example query"
 Display name of the query that appears in list views, widget headings, and on the query page.
-id
-string
+###### `id`
+* string
 Example "fe25e731-92f2-4838-9fb2-1ca364320a3d"
 UUID identifying the query.
-last_modifier_user_name
-string
+###### `last_modifier_user_name`
+* string
 Example "user@acme.com"
 Username of the user who last saved changes to this query.
-lifecycle_state
-string
+###### `lifecycle_state`
+* string
 Enum: ACTIVE | TRASHED
 Indicates whether the query is trashed.
-owner_user_name
-string
+###### `owner_user_name`
+* string
 Example "user@acme.com"
 Username of the user that owns the query.
-parameters
-Array of object
+###### `parameters`
+* Array of object
 List of query parameter definitions.
-parent_path
-string
+###### `parent_path`
+* string
 Example "/Users/user@acme.com"
 Workspace path of the workspace folder containing the object.
-query_text
-string
+###### `query_text`
+* string
 Example "SELECT 1"
 Text of the query to be run.
-run_as_mode
-string
+###### `run_as_mode`
+* string
 Enum: OWNER | VIEWER
 Sets the "Run as" role for the object.
-schema
-string
+###### `schema`
+* string
 Name of the schema where this query will be executed.
-tags
-Array of string
-update_time
-date-time
+###### `tags`
+* Array of string
+Tags associated with the query.
+###### `update_time`
+* date-time
 Timestamp when this query was last updated.
-warehouse_id
-string
-Example "a7066a8ef796be84"
-ID of the SQL warehouse attached to the query.
+###### `warehouse_id`
+* string
+* Example "a7066a8ef796be84"
+* ID of the SQL warehouse attached to the query.
 #### This method might return the following HTTP codes: 400, 401, 403, 404, 500
 #### Response samples
 
@@ -1544,102 +1568,132 @@ ID of the SQL warehouse attached to the query.
 
 ## Statement Execution
 The Databricks SQL Statement Execution API can be used to execute SQL statements on a SQL warehouse and fetch the result.
-Getting started
+
+**Getting started**
+
 We suggest beginning with the Databricks SQL Statement Execution API tutorial.
-Overview of statement execution and result fetching
+
+**Overview of statement execution and result fetching**
+
 Statement execution begins by issuing a statementexecution/executestatement request with a valid SQL statement and warehouse ID, along with optional parameters such as the data catalog and output format. If no other parameters are specified, the server will wait for up to 10s before returning a response. If the statement has completed within this timespan, the response will include the result data as a JSON array and metadata. Otherwise, if no result is available after the 10s timeout expired, the response will provide the statement ID that can be used to poll for results by using a statementexecution/getstatement request.
+
 You can specify whether the call should behave synchronously, asynchronously or start synchronously with a fallback to asynchronous execution. This is controlled with the wait_timeout and on_wait_timeout settings. If wait_timeout is set between 5-50 seconds (default: 10s), the call waits for results up to the specified timeout; when set to 0s, the call is asynchronous and responds immediately with a statement ID. The on_wait_timeout setting specifies what should happen when the timeout is reached while the statement execution has not yet finished. This can be set to either CONTINUE, to fallback to asynchronous mode, or it can be set to CANCEL, which cancels the statement.
-In summary:
-Synchronous mode
-wait_timeout=30s and on_wait_timeout=CANCEL
-The call waits up to 30 seconds; if the statement execution finishes within this time, the result data is returned directly in the response. If the execution takes longer than 30 seconds, the execution is canceled and the call returns with a CANCELED state.
-Asynchronous mode
-wait_timeout=0s (on_wait_timeout is ignored)
-The call doesn't wait for the statement to finish but returns directly with a statement ID. The status of the statement execution can be polled by issuing statementexecution/getstatement with the statement ID. Once the execution has succeeded, this call also returns the result and metadata in the response.
-Hybrid mode (default)
-wait_timeout=10s and on_wait_timeout=CONTINUE
-The call waits for up to 10 seconds; if the statement execution finishes within this time, the result data is returned directly in the response. If the execution takes longer than 10 seconds, a statement ID is returned. The statement ID can be used to fetch status and results in the same way as in the asynchronous mode.
+
+* In summary:
+  * Synchronous mode
+    * wait_timeout=30s and on_wait_timeout=CANCEL
+    * The call waits up to 30 seconds; if the statement execution finishes within this time, the result data is returned directly in the response. If the execution takes longer than 30 seconds, the execution is canceled and the call returns with a CANCELED state.
+  * Asynchronous mode
+    * wait_timeout=0s (on_wait_timeout is ignored)
+    * The call doesn't wait for the statement to finish but returns directly with a statement ID. The status of the statement execution can be polled by issuing statementexecution/getstatement with the statement ID. Once the execution has succeeded, this call also returns the result and metadata in the response.
+  * Hybrid mode (default)
+    * wait_timeout=10s and on_wait_timeout=CONTINUE
+    * The call waits for up to 10 seconds; if the statement execution finishes within this time, the result data is returned directly in the response. If the execution takes longer than 10 seconds, a statement ID is returned. The statement ID can be used to fetch status and results in the same way as in the asynchronous mode.
+
 Depending on the size, the result can be split into multiple chunks. If the statement execution is successful, the statement response contains a manifest and the first chunk of the result. The manifest contains schema information and provides metadata for each chunk in the result. Result chunks can be retrieved by index with statementexecution/getstatementresultchunkn which may be called in any order and in parallel. For sequential fetching, each chunk, apart from the last, also contains a next_chunk_index and next_chunk_internal_link that point to the next chunk.
+
 A statement can be canceled with statementexecution/cancelexecution.
-Fetching result data: format and disposition
+
+**Fetching result data: format and disposition**
+
 To specify the format of the result data, use the format field, which can be set to one of the following options: JSON_ARRAY (JSON), ARROW_STREAM (Apache Arrow Columnar), or CSV.
+
 There are two ways to receive statement results, controlled by the disposition setting, which can be either INLINE or EXTERNAL_LINKS:
-INLINE: In this mode, the result data is directly included in the response. It's best suited for smaller results. This mode can only be used with the JSON_ARRAY format.
-EXTERNAL_LINKS: In this mode, the response provides links that can be used to download the result data in chunks separately. This approach is ideal for larger results and offers higher throughput. This mode can be used with all the formats: JSON_ARRAY, ARROW_STREAM, and CSV.
+* INLINE: In this mode, the result data is directly included in the response. It's best suited for smaller results. This mode can only be used with the JSON_ARRAY format.
+* EXTERNAL_LINKS: In this mode, the response provides links that can be used to download the result data in chunks separately. This approach is ideal for larger results and offers higher throughput. This mode can be used with all the formats: JSON_ARRAY, ARROW_STREAM, and CSV.
+
 By default, the API uses format=JSON_ARRAY and disposition=INLINE.
-Limits and limitations
+
+**Limits and limitations**
+
 Note: The byte limit for INLINE disposition is based on internal storage metrics and will not exactly match the byte count of the actual payload.
-Statements with disposition=INLINE are limited to 25 MiB and will fail when this limit is exceeded.
-Statements with disposition=EXTERNAL_LINKS are limited to 100 GiB. Result sets larger than this limit will be truncated. Truncation is indicated by the truncated field in the result manifest.
-The maximum query text size is 16 MiB.
-Cancelation might silently fail. A successful response from a cancel request indicates that the cancel request was successfully received and sent to the processing engine. However, an outstanding statement might have already completed execution when the cancel request arrives. Polling for status until a terminal state is reached is a reliable way to determine the final state.
-Wait timeouts are approximate, occur server-side, and cannot account for things such as caller delays and network latency from caller to service.
-To guarantee that the statement is kept alive, you must poll at least once every 15 minutes.
-The results are only available for one hour after success; polling does not extend this.
-The SQL Execution API must be used for the entire lifecycle of the statement. For example, you cannot use the Jobs API to execute the command, and then the SQL Execution API to cancel it.
+
+* Statements with disposition=INLINE are limited to 25 MiB and will fail when this limit is exceeded.
+* Statements with disposition=EXTERNAL_LINKS are limited to 100 GiB. Result sets larger than this limit will be truncated. Truncation is indicated by the truncated field in the result manifest.
+* The maximum query text size is 16 MiB.
+* Cancelation might silently fail. A successful response from a cancel request indicates that the cancel request was successfully received and sent to the processing engine. However, an outstanding statement might have already completed execution when the cancel request arrives. Polling for status until a terminal state is reached is a reliable way to determine the final state.
+* Wait timeouts are approximate, occur server-side, and cannot account for things such as caller delays and network latency from caller to service.
+* To guarantee that the statement is kept alive, you must poll at least once every 15 minutes.
+* The results are only available for one hour after success; polling does not extend this.
+* The SQL Execution API must be used for the entire lifecycle of the statement. For example, you cannot use the Jobs API to execute the command, and then the SQL Execution API to cancel it.
+
 ### Execute a SQL statement
-`POST /api/2.0/sql/statements/`
-Execute a SQL statement and optionally await its results for a specified time.
-Use case: small result sets with INLINE + JSON_ARRAY
-For flows that generate small and predictable result sets (<= 25 MiB), INLINE responses of JSON_ARRAY result data are typically the simplest way to execute and fetch result data.
-Use case: large result sets with EXTERNAL_LINKS
-Using EXTERNAL_LINKS to fetch result data allows you to fetch large result sets efficiently. The main differences from using INLINE disposition are that the result data is accessed with shared access signature (SAS) URLs, and that there are 3 supported formats: JSON_ARRAY, ARROW_STREAM and CSV compared to only JSON_ARRAY with INLINE.
-Shared Access Signature URLs
-External links point to data stored within your workspace's internal storage, in the form of a SAS URL. The URLs are valid for only a short period, <= 15 minutes. Alongside each external_link is an expiration field indicating the time at which the URL is no longer valid. In EXTERNAL_LINKS mode, chunks can be resolved and fetched multiple times and in parallel.
-Warning: Databricks strongly recommends that you protect the URLs that are returned by the EXTERNAL_LINKS disposition.
-When you use the EXTERNAL_LINKS disposition, a short-lived, SAS URL is generated, which can be used to download the results directly from Azure storage. As a short-lived SAS token is embedded in this SAS URL, you should protect the URL.
-Because SAS URLs are already generated with embedded temporary SAS tokens, you must not set an Authorization header in the download requests.
-The EXTERNAL_LINKS disposition can be disabled upon request by creating a support case.
-See also Security best practices.
-API scope: `sql.statement-execution`
+* `POST /api/2.0/sql/statements/`
+* Execute a SQL statement and optionally await its results for a specified time.
+* **Use case: small result sets with INLINE + JSON_ARRAY**
+  * For flows that generate small and predictable result sets (<= 25 MiB), INLINE responses of JSON_ARRAY result data are typically the simplest way to execute and fetch result data.
+* **Use case: large result sets with EXTERNAL_LINKS**
+  * Using EXTERNAL_LINKS to fetch result data allows you to fetch large result sets efficiently. The main differences from using INLINE disposition are that the result data is accessed with shared access signature (SAS) URLs, and that there are 3 supported formats: JSON_ARRAY, ARROW_STREAM and CSV compared to only JSON_ARRAY with INLINE.
+* **Shared Access Signature URLs**
+  * External links point to data stored within your workspace's internal storage, in the form of a SAS URL. The URLs are valid for only a short period, <= 15 minutes. Alongside each external_link is an expiration field indicating the time at which the URL is no longer valid. In EXTERNAL_LINKS mode, chunks can be resolved and fetched multiple times and in parallel.
+---
+* **Warning: Databricks strongly recommends that you protect the URLs that are returned by the EXTERNAL_LINKS disposition.**
+  * When you use the EXTERNAL_LINKS disposition, a short-lived, SAS URL is generated, which can be used to download the results directly from Azure storage. As a short-lived SAS token is embedded in this SAS URL, you should protect the URL.
+  * Because SAS URLs are already generated with embedded temporary SAS tokens, you must not set an Authorization header in the download requests.
+  * The EXTERNAL_LINKS disposition can be disabled upon request by creating a support case.
+* See also Security best practices.
+---
+* API scope: `sql.statement-execution`
 #### Request body
-byte_limit
-int64
-Applies the given byte limit to the statement's result size. Byte counts are based on internal data representations and might not match the final size in the requested format. If the result was truncated due to the byte limit, then truncated in the response is set to true. When using EXTERNAL_LINKS disposition, a default byte_limit of 100 GiB is applied if byte_limit is not explcitly set.
-catalog
-string
-Sets default catalog for statement execution, similar to USE CATALOG in SQL.
-disposition
-string
-Enum: INLINE | EXTERNAL_LINKS
-Default "INLINE"
-The fetch disposition provides two modes of fetching results: INLINE and EXTERNAL_LINKS.
-Statements executed with INLINE disposition will return result data inline, in JSON_ARRAY format, in a series of chunks. If a given statement produces a result set with a size larger than 25 MiB, that statement execution is aborted, and no result set will be available.
-NOTE Byte limits are computed based upon internal representations of the result set data, and might not match the sizes visible in JSON responses.
-Statements executed with EXTERNAL_LINKS disposition will return result data as external links: URLs that point to cloud storage internal to the workspace. Using EXTERNAL_LINKS disposition allows statements to generate arbitrarily sized result sets for fetching up to 100 GiB. The resulting links have two important properties:
-They point to resources external to the Azure Databricks compute; therefore any associated authentication information (typically a personal access token, OAuth token, or similar) must be removed when fetching from these links.
-These are SAS URLs with a specific expiration, indicated in the response. The behavior when attempting to use an expired link is cloud specific.
-format
-string
-Enum: JSON_ARRAY | ARROW_STREAM | CSV
-Default "JSON_ARRAY"
-Statement execution supports three result formats: JSON_ARRAY (default), ARROW_STREAM, and CSV.
-Important: The formats ARROW_STREAM and CSV are supported only with EXTERNAL_LINKS disposition. JSON_ARRAY is supported in INLINE and EXTERNAL_LINKS disposition.
-When specifying format=JSON_ARRAY, result data will be formatted as an array of arrays of values, where each value is either the string representation of a value, or null. For example, the output of SELECT concat('id-', id) AS strCol, id AS intCol, null AS nullCol FROM range(3) would look like this:
+##### `byte_limit`
+* int64
+* Applies the given byte limit to the statement's result size. Byte counts are based on internal data representations and might not match the final size in the requested format. If the result was truncated due to the byte limit, then truncated in the response is set to true. When using EXTERNAL_LINKS disposition, a default byte_limit of 100 GiB is applied if byte_limit is not explcitly set.
+##### `catalog`
+* string
+* Sets default catalog for statement execution, similar to USE CATALOG in SQL.
+##### `disposition`
+* string
+* Enum: INLINE | EXTERNAL_LINKS
+* Default "INLINE"
+* The fetch disposition provides two modes of fetching results: INLINE and EXTERNAL_LINKS.
+* Statements executed with INLINE disposition will return result data inline, in JSON_ARRAY format, in a series of chunks. If a given statement produces a result set with a size larger than 25 MiB, that statement execution is aborted, and no result set will be available.
+* **NOTE** Byte limits are computed based upon internal representations of the result set data, and might not match the sizes visible in JSON responses.
+* Statements executed with EXTERNAL_LINKS disposition will return result data as external links: URLs that point to cloud storage internal to the workspace. Using EXTERNAL_LINKS disposition allows statements to generate arbitrarily sized result sets for fetching up to 100 GiB. The resulting links have two important properties:
+  * They point to resources external to the Azure Databricks compute; therefore any associated authentication information (typically a personal access token, OAuth token, or similar) must be removed when fetching from these links.
+  * These are SAS URLs with a specific expiration, indicated in the response. The behavior when attempting to use an expired link is cloud specific.
+##### `format`
+* string
+* Enum: JSON_ARRAY | ARROW_STREAM | CSV
+* Default "JSON_ARRAY"
+* Statement execution supports three result formats: JSON_ARRAY (default), ARROW_STREAM, and CSV.
+* Important: The formats ARROW_STREAM and CSV are supported only with EXTERNAL_LINKS disposition. JSON_ARRAY is supported in INLINE and EXTERNAL_LINKS disposition.
+* When specifying format=JSON_ARRAY, result data will be formatted as an array of arrays of values, where each value is either the string representation of a value, or null. For example, the output of SELECT concat('id-', id) AS strCol, id AS intCol, null AS nullCol FROM range(3) would look like this:
+
+```
 [
   [ "id-1", "1", null ],
   [ "id-2", "2", null ],
   [ "id-3", "3", null ],
 ]
+```
+
 When specifying format=JSON_ARRAY and disposition=EXTERNAL_LINKS, each chunk in the result contains compact JSON with no indentation or extra whitespace.
+
 When specifying format=ARROW_STREAM and disposition=EXTERNAL_LINKS, each chunk in the result will be formatted as Apache Arrow Stream. See the Apache Arrow streaming format.
+
 When specifying format=CSV and disposition=EXTERNAL_LINKS, each chunk in the result will be a CSV according to RFC 4180 standard. All the columns values will have string representation similar to the JSON_ARRAY format, and null values will be encoded as “null”. Only the first chunk in the result would contain a header row with column names. For example, the output of SELECT concat('id-', id) AS strCol, id AS intCol, null as nullCol FROM range(3) would look like this:
+
+```
 strCol,intCol,nullCol
 id-1,1,null
 id-2,2,null
 id-3,3,null
-on_wait_timeout
-string
-Enum: CONTINUE | CANCEL
-Default "CONTINUE"
-When wait_timeout > 0s, the call will block up to the specified time. If the statement execution doesn't finish within this time, on_wait_timeout determines whether the execution should continue or be canceled. When set to CONTINUE, the statement execution continues asynchronously and the call returns a statement ID which can be used for polling with statementexecution/getstatement. When set to CANCEL, the statement execution is canceled and the call returns with a CANCELED state.
-parameters
-Array of object
-A list of parameters to pass into a SQL statement containing parameter markers. A parameter consists of a name, a value, and optionally a type. To represent a NULL value, the value field may be omitted or set to null explicitly. If the type field is omitted, the value is interpreted as a string.
-If the type is given, parameters will be checked for type correctness according to the given type. A value is correct if the provided string can be converted to the requested type using the cast function. The exact semantics are described in the section cast function of the SQL language reference.
-For example, the following statement contains two parameters, my_name and my_date:
+```
+
+##### `on_wait_timeout`
+* string
+* Enum: CONTINUE | CANCEL
+* Default "CONTINUE"
+* When wait_timeout > 0s, the call will block up to the specified time. If the statement execution doesn't finish within this time, on_wait_timeout determines whether the execution should continue or be canceled. When set to CONTINUE, the statement execution continues asynchronously and the call returns a statement ID which can be used for polling with statementexecution/getstatement. When set to CANCEL, the statement execution is canceled and the call returns with a CANCELED state.
+##### `parameters`
+* Array of object
+* A list of parameters to pass into a SQL statement containing parameter markers. A parameter consists of a name, a value, and optionally a type. To represent a NULL value, the value field may be omitted or set to null explicitly. If the type field is omitted, the value is interpreted as a string.
+* If the type is given, parameters will be checked for type correctness according to the given type. A value is correct if the provided string can be converted to the requested type using the cast function. The exact semantics are described in the section cast function of the SQL language reference.
+* For example, the following statement contains two parameters, my_name and my_date:
 SELECT * FROM my_table WHERE name = :my_name AND date = :my_date
 The parameters can be passed in the request body as follows:
+
+```
 {
   ...,
   "statement": "SELECT * FROM my_table WHERE name = :my_name AND date = :my_date",
@@ -1648,49 +1702,54 @@ The parameters can be passed in the request body as follows:
     { "name": "my_date", "value": "2020-01-01", "type": "DATE" }
   ]
 }
+```
+
 Currently, positional parameters denoted by a ? marker are not supported by the Databricks SQL Statement Execution API.
+
 Also see the section Parameter markers of the SQL language reference.
-row_limit
-int64
+
+##### `row_limit`
+* int64
 Applies the given row limit to the statement's result set, but unlike the LIMIT clause in SQL, it also sets the truncated field in the response to indicate whether the result was trimmed due to the limit or not.
-schema
-string
+##### `schema`
+* string
 Sets default schema for statement execution, similar to USE SCHEMA in SQL.
-statement
-required
-string
-Example "SELECT * FROM range(10)"
-The SQL statement to execute. The statement can optionally be parameterized, see parameters. The maximum query text size is 16 MiB.
-wait_timeout
-string
-Default "10s"
-The time in seconds the call will wait for the statement's result set as Ns, where N can be set to 0 or to a value between 5 and 50.
-When set to 0s, the statement will execute in asynchronous mode and the call will not wait for the execution to finish. In this case, the call returns directly with PENDING state and a statement ID which can be used for polling with statementexecution/getstatement.
-When set between 5 and 50 seconds, the call will behave synchronously up to this timeout and wait for the statement execution to finish. If the execution finishes within this time, the call returns immediately with a manifest and result data (or a FAILED state in case of an execution error). If the statement takes longer to execute, on_wait_timeout determines what should happen after the timeout is reached.
-warehouse_id
-required
-string
-Warehouse upon which to execute a statement. See also What are SQL warehouses?
+##### `statement`
+* required
+* string
+* Example "SELECT * FROM range(10)"
+* The SQL statement to execute. The statement can optionally be parameterized, see parameters. The maximum query text size is 16 MiB.
+##### `wait_timeout`
+* string
+* Default "10s"
+* The time in seconds the call will wait for the statement's result set as Ns, where N can be set to 0 or to a value between 5 and 50.
+
+* When set to 0s, the statement will execute in asynchronous mode and the call will not wait for the execution to finish. In this case, the call returns directly with PENDING state and a statement ID which can be used for polling with statementexecution/getstatement.
+
+* When set between 5 and 50 seconds, the call will behave synchronously up to this timeout and wait for the statement execution to finish. If the execution finishes within this time, the call returns immediately with a manifest and result data (or a FAILED state in case of an execution error). If the statement takes longer to execute, on_wait_timeout determines what should happen after the timeout is reached.
+##### `warehouse_id`
+* required
+* string
+* Warehouse upon which to execute a statement. See also What are SQL warehouses?
 #### Responses
 ##### `200 Request completed successfully.`
 * StatementResponse contains `statement_id` and `status`; other fields might be absent or present depending on context. If the SQL warehouse fails to execute the provided statement, a 200 response is returned with `status.state` set to `FAILED` (in constract to a failure when accepting the request, which results in a non-200 response). Details of the error can be found at `status.error` in case of execution failures.
-manifest
-object
-The result manifest provides schema and metadata for the result set.
-result
-object
-Contains the result data of a single chunk when using INLINE disposition. When using EXTERNAL_LINKS disposition, the array external_links is used instead to provide SAS URLs to the result data in cloud storage. Exactly one of these alternatives is used. (While the external_links array prepares the API to return multiple links in a single response. Currently only a single link is returned.)
-statement_id
-string
-The statement ID is returned upon successfully submitting a SQL statement, and is a required reference for all subsequent calls.
-status
-object
-The status response includes execution state and if relevant, error information.
+###### `manifest`
+* object
+* The result manifest provides schema and metadata for the result set.
+###### `result`
+* object
+* Contains the result data of a single chunk when using INLINE disposition. When using EXTERNAL_LINKS disposition, the array external_links is used instead to provide SAS URLs to the result data in cloud storage. Exactly one of these alternatives is used. (While the external_links array prepares the API to return multiple links in a single response. Currently only a single link is returned.)
+###### `statement_id`
+* string
+* The statement ID is returned upon successfully submitting a SQL statement, and is a required reference for all subsequent calls.
+###### `status`
+* object
+* The status response includes execution state and if relevant, error information.
 #### This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
 #### Request samples
-JSON
-
-Asynchronous execution
+* JSON
+* Asynchronous execution
 
 ```json
 {
@@ -1700,8 +1759,7 @@ Asynchronous execution
 }
 ```
 #### Response samples
-
-Statement failed with syntax errror
+* Statement failed with syntax error
 
 ```json
 {
@@ -1715,6 +1773,7 @@ Statement failed with syntax errror
   }
 }
 ```
+
 ### Get status, manifest, and result first chunk
 `GET /api/2.0/sql/statements/{statement_id}`
 This request can be used to poll for the statement's status. When the status.state field is SUCCEEDED it will also return the result manifest and the first chunk of the result data. When the statement is in the terminal states CANCELED, CLOSED or FAILED, it returns HTTP 200 with the state set. After at least 12 hours in terminal state, the statement is removed from the warehouse and further calls will receive an HTTP 404 response.
