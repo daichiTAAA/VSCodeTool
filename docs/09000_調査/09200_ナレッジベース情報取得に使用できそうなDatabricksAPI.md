@@ -226,78 +226,77 @@ Error responses are returned in the following format:
 Retrieves the details for a single serving endpoint.
 API scope: `serving.serving-endpoints`
 #### Path parameters
-name
-required
-string
-[ 1 .. 63 ] characters
-Example "feed-ads"
-The name of the serving endpoint. This field is required.
+##### `name`
+* required string [ 1 .. 63 ] characters
+* Example "feed-ads"
+* The name of the serving endpoint. This field is required.
+
 #### Responses
-200 
+##### 200 Request completed successfully.
 Request completed successfully.
-Request completed successfully.
-ai_gateway
-object
-The AI Gateway configuration for the serving endpoint. NOTE: External model, provisioned throughput, and pay-per-token endpoints are fully supported; agent endpoints currently only support inference tables.
-budget_policy_id
-string
-The budget policy associated with the endpoint.
-config
-object
-The config that is currently being served by the endpoint.
-creation_timestamp
-int64
-The timestamp when the endpoint was created in Unix time.
-creator
-string
-Example "alice@company.com"
-The email of the user who created the serving endpoint.
-data_plane_info
-object
-Information required to query DataPlane APIs.
-description
-string
-Description of the serving model
-email_notifications
-object
-Email notification settings.
-endpoint_url
-string
-Endpoint invocation url if route optimization is enabled for endpoint
-id
-string
-Example "88fd3f75a0d24b0380ddc40484d7a31b"
-System-generated ID of the endpoint. This is used to refer to the endpoint in the Permissions API
-last_updated_timestamp
-int64
-The timestamp when the endpoint was last updated by a user in Unix time.
-name
-string
-Example "feed-ads"
-The name of the serving endpoint.
-pending_config
-object
-The config that the endpoint is attempting to update to.
-permission_level
-string
-Enum: CAN_MANAGE | CAN_QUERY | CAN_VIEW
-Example "CAN_MANAGE"
+###### ai_gateway
+* object
+* The AI Gateway configuration for the serving endpoint. NOTE: External model, provisioned throughput, and pay-per-token endpoints are fully supported; agent endpoints currently only support inference tables.
+###### budget_policy_id
+* string
+* The budget policy associated with the endpoint.
+###### config
+* object
+* The config that is currently being served by the endpoint.
+###### creation_timestamp
+* int64
+* The timestamp when the endpoint was created in Unix time.
+###### creator
+* string
+* Example "alice@company.com"
+* The email of the user who created the serving endpoint.
+###### data_plane_info
+* object
+* Information required to query DataPlane APIs.
+###### description
+* string
+* Description of the serving model
+###### email_notifications
+* object
+* Email notification settings.
+###### endpoint_url
+* string
+* Endpoint invocation url if route optimization is enabled for endpoint
+###### id
+* string
+* Example "88fd3f75a0d24b0380ddc40484d7a31b"
+* System-generated ID of the endpoint. This is used to refer to the endpoint in the Permissions API
+###### last_updated_timestamp
+* int64
+* The timestamp when the endpoint was last updated by a user in Unix time.
+###### name
+* string
+* Example "feed-ads"
+* The name of the serving endpoint.
+###### pending_config
+* object
+* The config that the endpoint is attempting to update to.
+###### permission_level
+* string
+* Enum: CAN_MANAGE | CAN_QUERY | CAN_VIEW
+* Example "CAN_MANAGE"
 The permission level of the principal making the request.
-route_optimized
-boolean
-Example true
-Boolean representing if route optimization has been enabled for the endpoint
-state
-object
-Information corresponding to the state of the serving endpoint.
-tags
-Array of object
-Tags attached to the serving endpoint.
-task
-string
-Example "model-serving-task"
-The task type of the serving endpoint.
-This method might return the following HTTP codes: 401, 404, 500
+###### route_optimized
+* boolean
+* Example true
+* Boolean representing if route optimization has been enabled for the endpoint
+###### state
+* object
+* Information corresponding to the state of the serving endpoint.
+###### tags
+* Array of object
+* Tags attached to the serving endpoint.
+###### task
+* string
+* Example "model-serving-task"
+* The task type of the serving endpoint.
+* This method might return the following HTTP codes: 401, 404, 500
+
 ##### Response samples
 
 ```json
