@@ -35,12 +35,11 @@ API scope: `serving.serving-endpoints`
 
 #### Responses
 ##### 200 Request completed successfully.
-
 Request completed successfully.
 
-`endpoints` Array of object
-
-The list of endpoints.
+###### `endpoints`
+* Array of object
+* The list of endpoints.
 
 ##### This method might return the following HTTP codes: 401, 500
 
@@ -234,49 +233,49 @@ API scope: `serving.serving-endpoints`
 #### Responses
 ##### 200 Request completed successfully.
 Request completed successfully.
-###### ai_gateway
+###### `ai_gateway`
 * object
 * The AI Gateway configuration for the serving endpoint. NOTE: External model, provisioned throughput, and pay-per-token endpoints are fully supported; agent endpoints currently only support inference tables.
-###### budget_policy_id
+###### `budget_policy_id`
 * string
 * The budget policy associated with the endpoint.
-###### config
+###### `config`
 * object
 * The config that is currently being served by the endpoint.
-###### creation_timestamp
+###### `creation_timestamp`
 * int64
 * The timestamp when the endpoint was created in Unix time.
-###### creator
+###### `creator`
 * string
 * Example "alice@company.com"
 * The email of the user who created the serving endpoint.
-###### data_plane_info
+###### `data_plane_info`
 * object
 * Information required to query DataPlane APIs.
-###### description
+###### `description`
 * string
 * Description of the serving model
-###### email_notifications
+###### `email_notifications`
 * object
 * Email notification settings.
-###### endpoint_url
+###### `endpoint_url`
 * string
 * Endpoint invocation url if route optimization is enabled for endpoint
-###### id
+###### `id`
 * string
 * Example "88fd3f75a0d24b0380ddc40484d7a31b"
 * System-generated ID of the endpoint. This is used to refer to the endpoint in the Permissions API
-###### last_updated_timestamp
+###### `last_updated_timestamp`
 * int64
 * The timestamp when the endpoint was last updated by a user in Unix time.
-###### name
+###### `name`
 * string
 * Example "feed-ads"
 * The name of the serving endpoint.
-###### pending_config
+###### `pending_config`
 * object
 * The config that the endpoint is attempting to update to.
-###### permission_level
+###### `permission_level`
 * string
 * Enum: CAN_MANAGE | CAN_QUERY | CAN_VIEW
 * Example "CAN_MANAGE"
@@ -691,12 +690,10 @@ Public preview
 Get the query schema of the serving endpoint in OpenAPI format. The schema contains information for the supported paths, input and output format and datatypes.
 API scope: `serving.serving-endpoints`
 #### Path parameters
-name
-required
-string
-[ 1 .. 63 ] characters
-Example "feed-ads"
-The name of the serving endpoint that the served model belongs to. This field is required.
+##### `name`
+* required string [1..63]
+* Example "feed-ads"
+* The name of the serving endpoint that the served model belongs to.
 #### Responses
 200 
 Request completed successfully.
@@ -708,10 +705,9 @@ This method might return the following HTTP codes: 401, 500
 Query a serving endpoint
 API scope: `serving.serving-endpoints`
 #### Path parameters
-name
-required
-string
-The name of the serving endpoint. This field is required and is provided via the path parameter.
+##### `name`
+* required string
+* The name of the serving endpoint. Provided via the path parameter.
 #### Request body
 client_request_id
 string
@@ -771,7 +767,7 @@ The temperature field used ONLY for completions and chat external & foundation m
 usage_context
 object
 Optional user-provided context that will be recorded in the usage tracking table.
-Responses
+#### Responses
 200 
 Request completed successfully.
 Request completed successfully.
@@ -886,9 +882,9 @@ Endpoint: Represents the compute resources to host vector search indexes.
 List all vector search endpoints in the workspace.
 API scope: `vectorsearch.vector-search-endpoints`
 #### Query parameters
-page_token
-string
-Token for pagination
+##### `page_token`
+* string
+* Token for pagination
 #### Responses
 200 
 Request completed successfully. The response includes a list of items and pagination information. If `next_page_token` is set, there are more results.
@@ -929,11 +925,10 @@ A token that can be used to get the next page of results. If not present, there 
 Get details for a single vector search endpoint.
 API scope: `vectorsearch.vector-search-endpoints`
 #### Path parameters
-endpoint_name
-required
-string
-Name of the endpoint
-Responses
+##### `endpoint_name`
+* required string
+* Name of the endpoint
+#### Responses
 200 
 Request completed successfully.
 Request completed successfully.
@@ -1001,13 +996,12 @@ Direct Vector Access Index: An index that supports direct read and write of vect
 List all indexes in the given endpoint.
 API scope: `vectorsearch.vector-search-indexes`
 #### Query parameters
-endpoint_name
-required
-string
-Name of the endpoint
-page_token
-string
-Token for pagination
+##### `endpoint_name`
+* required string
+* Name of the endpoint
+##### `page_token`
+* string
+* Token for pagination
 #### Responses
 200 
 Request completed successfully.
@@ -1040,11 +1034,10 @@ Response samples
 Get an index.
 API scope: `vectorsearch.vector-search-indexes`
 #### Path parameters
-index_name
-required
-string
-Name of the index
-Responses
+##### `index_name`
+* required string
+* Name of the index
+#### Responses
 200 
 Request completed successfully.
 Request completed successfully.
@@ -1109,10 +1102,9 @@ Successful response for Delta Sync Index
 Query the specified vector index.
 API scope: `vectorsearch.vector-search-indexes`
 #### Path parameters
-index_name
-required
-string
-Name of the vector index to query.
+##### `index_name`
+* required string
+* Name of the vector index to query.
 #### Request body
 columns
 required
@@ -1142,7 +1134,7 @@ Query vector. Required for Direct Vector Access Index and Delta Sync Index using
 score_threshold
 double
 Threshold for the approximate nearest neighbor search. Defaults to 0.0.
-Responses
+#### Responses
 200 
 Request completed successfully.
 Request completed successfully.
@@ -1215,15 +1207,15 @@ index_name
 required
 string
 Name of the vector index to query.
-Request body
+#### Request body
 Request payload for getting next page of results.
-endpoint_name
-string
-Name of the endpoint.
-page_token
-string
-Page token returned from previous QueryVectorIndex or QueryVectorIndexNextPage API.
-Responses
+##### `endpoint_name`
+* string
+* Name of the endpoint.
+##### `page_token`
+* string
+* Page token returned from previous QueryVectorIndex or QueryVectorIndexNextPage API.
+#### Responses
 200 
 Request completed successfully.
 Request completed successfully.
@@ -1292,12 +1284,12 @@ required
 string
 Name of the vector index to scan.
 #### Request body
-last_primary_key
-string
-Primary key of the last entry returned in the previous scan.
-num_results
-int32
-Number of results to return. Defaults to 10.
+##### `last_primary_key`
+* string
+* Primary key of the last entry returned in the previous scan.
+##### `num_results`
+* int32
+* Number of results to return. Defaults to 10.
 #### Responses
 200 
 Request completed successfully.
@@ -1405,13 +1397,11 @@ The queries API can be used to perform CRUD operations on queries. A query is a 
 Gets a list of queries accessible to the user, ordered by creation time. Warning: Calling this API concurrently 10 or more times could result in throttling, service degradation, or a temporary ban.
 API scope: `sql.queries`
 #### Query parameters
-page_token
-string
-page_size
-int32
-<= 100
-Default 20
-Responses
+##### `page_token`
+* string
+##### `page_size`
+* int32 (<= 100, default 20)
+#### Responses
 200 
 Request completed successfully. The response includes a list of items and pagination information. If `next_page_token` is set, there are more results.
 Request completed successfully.
@@ -1486,10 +1476,9 @@ Response samples
 Gets a query.
 API scope: `sql.queries`
 #### Path parameters
-id
-required
-string
-Responses
+##### `id`
+* required string
+#### Responses
 200 
 Request completed successfully.
 Request completed successfully.
@@ -1714,7 +1703,7 @@ warehouse_id
 required
 string
 Warehouse upon which to execute a statement. See also What are SQL warehouses?
-Responses
+#### Responses
 200 
 StatementResponse contains `statement_id` and `status`; other fields might be absent or present depending on context. If the SQL warehouse fails to execute the provided statement, a 200 response is returned with `status.state` set to `FAILED` (in constract to a failure when accepting the request, which results in a non-200 response). Details of the error can be found at `status.error` in case of execution failures.
 StatementResponse contains statement_id and status; other fields might be absent or present depending on context. If the SQL warehouse fails to execute the provided statement, a 200 response is returned with status.state set to FAILED (in constract to a failure when accepting the request, which results in a non-200 response). Details of the error can be found at status.error in case of execution failures.
@@ -1769,7 +1758,7 @@ statement_id
 required
 string
 The statement ID is returned upon successfully submitting a SQL statement, and is a required reference for all subsequent calls.
-Responses
+#### Responses
 200 
 StatementResponse contains `statement_id` and `status`; other fields might be absent or present depending on context. In case of an error during execution of the SQL statement -- as opposed to an error while processing the request -- a 200 response is returned with error details in the `status` field.
 StatementResponse contains statement_id and status; other fields might be absent or present depending on context. In case of an error during execution of the SQL statement -- as opposed to an error while processing the request -- a 200 response is returned with error details in the status field.
@@ -1812,7 +1801,7 @@ statement_id
 required
 string
 The statement ID is returned upon successfully submitting a SQL statement, and is a required reference for all subsequent calls.
-Responses
+#### Responses
 200 
 Cancel response is empty; receiving response indicates successful receipt.
 Cancel response is empty; receiving response indicates successful receipt.
@@ -1830,7 +1819,7 @@ The statement ID is returned upon successfully submitting a SQL statement, and i
 chunk_index
 required
 int32
-Responses
+#### Responses
 200 
 Successful return; depending on `disposition` returns chunks of data either inline, or as links.
 Successful return; depending on disposition returns chunks of data either inline, or as links.
@@ -1897,7 +1886,7 @@ Maximum number of spaces to return per page
 page_token
 string
 Pagination token for getting the next page of results
-Responses
+#### Responses
 200 
 Request completed successfully.
 Request completed successfully.
@@ -1934,7 +1923,7 @@ required
 uuid
 Example "e1ef34712a29169db030324fd0e1df5f"
 The ID associated with the Genie space
-Responses
+#### Responses
 200 
 Request completed successfully.
 Request completed successfully.
@@ -1970,7 +1959,7 @@ required
 uuid
 Example "e1ef34712a29169db030324fd0e1df5f"
 The ID of the Genie space to retrieve conversations from.
-Query parameters
+#### Query parameters
 page_size
 int32
 <= 100
@@ -1979,7 +1968,7 @@ Maximum number of conversations to return per page
 page_token
 string
 Token to get the next page of results
-Responses
+#### Responses
 200 
 Request completed successfully.
 Request completed successfully.
@@ -2011,23 +2000,20 @@ Public preview
 Create new message in a conversation. The AI response uses all previously created messages in the conversation to respond.
 API scope: `dashboards.genie`
 #### Path parameters
-space_id
-required
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-The ID associated with the Genie space where the conversation is started.
-conversation_id
-required
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-The ID associated with the conversation.
-Request body
-content
-required
-string
-Example "Biggest open opportunities"
-User message content.
-Responses
+##### `space_id`
+* required uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* The ID associated with the Genie space where the conversation is started.
+##### `conversation_id`
+* required uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* The ID associated with the conversation.
+#### Request body
+##### `content`
+* required string
+* Example "Biggest open opportunities"
+* User message content.
+#### Responses
 200 
 Request completed successfully.
 Request completed successfully.
@@ -2121,22 +2107,19 @@ Public preview
 Get message from conversation.
 API scope: `dashboards.genie`
 #### Path parameters
-space_id
-required
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-The ID associated with the Genie space where the target conversation is located.
-conversation_id
-required
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-The ID associated with the target conversation.
-message_id
-required
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-The ID associated with the target message from the identified conversation.
-Responses
+##### `space_id`
+* required uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* The ID associated with the Genie space where the target conversation is located.
+##### `conversation_id`
+* required uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* The ID associated with the target conversation.
+##### `message_id`
+* required uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* The ID associated with the target message from the identified conversation.
+#### Responses
 200 
 Request completed successfully.
 Request completed successfully.
@@ -2222,27 +2205,23 @@ Public preview
 Execute the SQL for a message query attachment. Use this API when the query attachment has expired and needs to be re-executed.
 API scope: `dashboards.genie`
 #### Path parameters
-space_id
-required
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-Genie space ID
-conversation_id
-required
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-Conversation ID
-message_id
-required
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-Message ID
-attachment_id
-required
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-Attachment ID
-Responses
+##### `space_id`
+* required uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Genie space ID
+##### `conversation_id`
+* required uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Conversation ID
+##### `message_id`
+* required uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Message ID
+##### `attachment_id`
+* required uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Attachment ID
+#### Responses
 200 
 Request completed successfully.
 Request completed successfully.
@@ -2347,7 +2326,7 @@ required
 uuid
 Example "e1ef34712a29169db030324fd0e1df5f"
 Attachment ID
-Responses
+#### Responses
 200 
 Request completed successfully.
 Request completed successfully.
@@ -2432,18 +2411,16 @@ Public preview
 Start a new conversation.
 API scope: `dashboards.genie`
 #### Path parameters
-space_id
-required
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-The ID associated with the Genie space where you want to start a conversation.
-Request body
-content
-required
-string
-Example "Biggest open opportunities"
-The text of the message that starts the conversation.
-Responses
+##### `space_id`
+* required uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* The ID associated with the Genie space where you want to start a conversation.
+#### Request body
+##### `content`
+* required string
+* Example "Biggest open opportunities"
+* The text of the message that starts the conversation.
+#### Responses
 200 
 Request completed successfully.
 Request completed successfully.
