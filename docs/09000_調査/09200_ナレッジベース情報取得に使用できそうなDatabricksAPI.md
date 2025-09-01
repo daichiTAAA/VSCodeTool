@@ -28,18 +28,32 @@ The Serving Endpoints API allows you to create, update, and delete model serving
 You can use a serving endpoint to serve models from the Databricks Model Registry or from Unity Catalog. Endpoints expose the underlying models as scalable REST API endpoints using serverless compute. This means the endpoints and associated compute resources are fully managed by Azure Databricks and will not appear in your cloud account. A serving endpoint can consist of one or more MLflow models from the Databricks Model Registry, called served entities. A serving endpoint can have at most ten served entities. You can configure traffic settings to define how requests should be routed to your served entities behind an endpoint. Additionally, you can configure the scale of resources that should be applied to each served entity.
 ### Get all serving endpoints
 `GET /api/2.0/serving-endpoints`
+
 Get all serving endpoints.
-API scope: 
-serving.serving-endpoints
-Responses
-200 
+
+API scope: `serving.serving-endpoints`
+
+#### Responses
+##### 200 Request completed successfully.
+
 Request completed successfully.
-Request completed successfully.
-endpoints
-Array of object
+
+`endpoints` Array of object
+
 The list of endpoints.
-This method might return the following HTTP codes: 401, 500
-Response samples
+
+##### This method might return the following HTTP codes: 401, 500
+
+Error responses are returned in the following format:
+
+```json
+{
+  "error_code": "Error code",
+  "message": "Human-readable error message."
+}
+```
+
+##### Response samples
 
 ```json
 {
@@ -210,16 +224,15 @@ Response samples
 ### Get a single serving endpoint
 `GET /api/2.0/serving-endpoints/{name}`
 Retrieves the details for a single serving endpoint.
-API scope: 
-serving.serving-endpoints
-Path parameters
+API scope: `serving.serving-endpoints`
+#### Path parameters
 name
 required
 string
 [ 1 .. 63 ] characters
 Example "feed-ads"
 The name of the serving endpoint. This field is required.
-Responses
+#### Responses
 200 
 Request completed successfully.
 Request completed successfully.
@@ -285,7 +298,7 @@ string
 Example "model-serving-task"
 The task type of the serving endpoint.
 This method might return the following HTTP codes: 401, 404, 500
-Response samples
+##### Response samples
 
 ```json
 {
@@ -677,16 +690,15 @@ Response samples
 Public preview
 `GET /api/2.0/serving-endpoints/{name}/openapi`
 Get the query schema of the serving endpoint in OpenAPI format. The schema contains information for the supported paths, input and output format and datatypes.
-API scope: 
-serving.serving-endpoints
-Path parameters
+API scope: `serving.serving-endpoints`
+#### Path parameters
 name
 required
 string
 [ 1 .. 63 ] characters
 Example "feed-ads"
 The name of the serving endpoint that the served model belongs to. This field is required.
-Responses
+#### Responses
 200 
 Request completed successfully.
 Request completed successfully.
@@ -695,14 +707,13 @@ This method might return the following HTTP codes: 401, 500
 ### Query a serving endpoint
 `POST /serving-endpoints/{name}/invocations`
 Query a serving endpoint
-API scope: 
-serving.serving-endpoints
-Path parameters
+API scope: `serving.serving-endpoints`
+#### Path parameters
 name
 required
 string
 The name of the serving endpoint. This field is required and is provided via the path parameter.
-Request body
+#### Request body
 client_request_id
 string
 Optional user-provided request identifier that will be recorded in the inference table and the usage tracking table.
@@ -805,7 +816,7 @@ object
 Public preview
 The usage object that may be returned by the external/foundation model serving endpoint. This contains information about the number of tokens used in the prompt and response.
 This method might return the following HTTP codes: 401, 403, 404, 500
-Request samples
+##### Request samples
 JSON
 
 Dataframe input in split orientation
@@ -874,13 +885,12 @@ Endpoint: Represents the compute resources to host vector search indexes.
 ### List all endpoints
 `GET /api/2.0/vector-search/endpoints`
 List all vector search endpoints in the workspace.
-API scope: 
-vectorsearch.vector-search-endpoints
-Query parameters
+API scope: `vectorsearch.vector-search-endpoints`
+#### Query parameters
 page_token
 string
 Token for pagination
-Responses
+#### Responses
 200 
 Request completed successfully. The response includes a list of items and pagination information. If `next_page_token` is set, there are more results.
 Request completed successfully.
@@ -891,7 +901,7 @@ An array of Endpoint objects
 next_page_token
 string
 A token that can be used to get the next page of results. If not present, there are no more results to show.
-Response samples
+##### Response samples
 
 ```json
 {
@@ -918,9 +928,8 @@ Response samples
 ### Get an endpoint
 `GET /api/2.0/vector-search/endpoints/{endpoint_name}`
 Get details for a single vector search endpoint.
-API scope: 
-vectorsearch.vector-search-endpoints
-Path parameters
+API scope: `vectorsearch.vector-search-endpoints`
+#### Path parameters
 endpoint_name
 required
 string
@@ -991,9 +1000,8 @@ Direct Vector Access Index: An index that supports direct read and write of vect
 ### List indexes
 `GET /api/2.0/vector-search/indexes`
 List all indexes in the given endpoint.
-API scope: 
-vectorsearch.vector-search-indexes
-Query parameters
+API scope: `vectorsearch.vector-search-indexes`
+#### Query parameters
 endpoint_name
 required
 string
@@ -1001,7 +1009,7 @@ Name of the endpoint
 page_token
 string
 Token for pagination
-Responses
+#### Responses
 200 
 Request completed successfully.
 Request completed successfully.
@@ -1031,9 +1039,8 @@ Response samples
 ### Get an index
 `GET /api/2.0/vector-search/indexes/{index_name}`
 Get an index.
-API scope: 
-vectorsearch.vector-search-indexes
-Path parameters
+API scope: `vectorsearch.vector-search-indexes`
+#### Path parameters
 index_name
 required
 string
@@ -1101,14 +1108,13 @@ Successful response for Delta Sync Index
 ### Query an index
 `POST /api/2.0/vector-search/indexes/{index_name}/query`
 Query the specified vector index.
-API scope: 
-vectorsearch.vector-search-indexes
-Path parameters
+API scope: `vectorsearch.vector-search-indexes`
+#### Path parameters
 index_name
 required
 string
 Name of the vector index to query.
-Request body
+#### Request body
 columns
 required
 Array of string
@@ -1204,9 +1210,8 @@ Response samples
 ### Query next page
 `POST /api/2.0/vector-search/indexes/{index_name}/query-next-page`
 Use next_page_token returned from previous QueryVectorIndex or QueryVectorIndexNextPage request to fetch next page of results.
-API scope: 
-vectorsearch.vector-search-indexes
-Path parameters
+API scope: `vectorsearch.vector-search-indexes`
+#### Path parameters
 index_name
 required
 string
@@ -1281,21 +1286,20 @@ Response samples
 ### Scan an index
 `POST /api/2.0/vector-search/indexes/{index_name}/scan`
 Scan the specified vector index and return the first num_results entries after the exclusive primary_key.
-API scope: 
-vectorsearch.vector-search-indexes
-Path parameters
+API scope: `vectorsearch.vector-search-indexes`
+#### Path parameters
 index_name
 required
 string
 Name of the vector index to scan.
-Request body
+#### Request body
 last_primary_key
 string
 Primary key of the last entry returned in the previous scan.
 num_results
 int32
 Number of results to return. Defaults to 10.
-Responses
+#### Responses
 200 
 Request completed successfully.
 Request completed successfully.
@@ -1400,9 +1404,8 @@ The queries API can be used to perform CRUD operations on queries. A query is a 
 ### List queries
 `GET /api/2.0/sql/queries`
 Gets a list of queries accessible to the user, ordered by creation time. Warning: Calling this API concurrently 10 or more times could result in throttling, service degradation, or a temporary ban.
-API scope: 
-sql.queries
-Query parameters
+API scope: `sql.queries`
+#### Query parameters
 page_token
 string
 page_size
@@ -1482,9 +1485,8 @@ Response samples
 ### Get a query
 `GET /api/2.0/sql/queries/{id}`
 Gets a query.
-API scope: 
-sql.queries
-Path parameters
+API scope: `sql.queries`
+#### Path parameters
 id
 required
 string
@@ -1633,9 +1635,8 @@ When you use the EXTERNAL_LINKS disposition, a short-lived, SAS URL is generated
 Because SAS URLs are already generated with embedded temporary SAS tokens, you must not set an Authorization header in the download requests.
 The EXTERNAL_LINKS disposition can be disabled upon request by creating a support case.
 See also Security best practices.
-API scope: 
-sql.statement-execution
-Request body
+API scope: `sql.statement-execution`
+#### Request body
 byte_limit
 int64
 Applies the given byte limit to the statement's result size. Byte counts are based on internal data representations and might not match the final size in the requested format. If the result was truncated due to the byte limit, then truncated in the response is set to true. When using EXTERNAL_LINKS disposition, a default byte_limit of 100 GiB is applied if byte_limit is not explcitly set.
@@ -1763,9 +1764,8 @@ Statement failed with syntax errror
 `GET /api/2.0/sql/statements/{statement_id}`
 This request can be used to poll for the statement's status. When the status.state field is SUCCEEDED it will also return the result manifest and the first chunk of the result data. When the statement is in the terminal states CANCELED, CLOSED or FAILED, it returns HTTP 200 with the state set. After at least 12 hours in terminal state, the statement is removed from the warehouse and further calls will receive an HTTP 404 response.
 NOTE This call currently might take up to 5 seconds to get the latest status and result.
-API scope: 
-sql.statement-execution
-Path parameters
+API scope: `sql.statement-execution`
+#### Path parameters
 statement_id
 required
 string
@@ -1807,9 +1807,8 @@ Statement failed with syntax errror
 ### Cancel statement execution
 `POST /api/2.0/sql/statements/{statement_id}/cancel`
 Requests that an executing statement be canceled. Callers must poll for status to see the terminal state.
-API scope: 
-sql.statement-execution
-Path parameters
+API scope: `sql.statement-execution`
+#### Path parameters
 statement_id
 required
 string
@@ -1823,9 +1822,8 @@ This method might return the following HTTP codes: 400, 401, 403, 429, 500, 503
 ### Get result chunk by index
 `GET /api/2.0/sql/statements/{statement_id}/result/chunks/{chunk_index}`
 After the statement execution has SUCCEEDED, this request can be used to fetch any chunk by index. Whereas the first chunk with chunk_index=0 is typically fetched with statementexecution/executestatement or statementexecution/getstatement, this request can be used to fetch subsequent chunks. The response structure is identical to the nested result element described in the statementexecution/getstatement request, and similarly includes the next_chunk_index and next_chunk_internal_link fields for simple iteration through the result set.
-API scope: 
-sql.statement-execution
-Path parameters
+API scope: `sql.statement-execution`
+#### Path parameters
 statement_id
 required
 string
@@ -1890,9 +1888,8 @@ Genie provides a no-code experience for business users, powered by AI/BI. Analys
 Public preview
 `GET /api/2.0/genie/spaces`
 Get list of Genie Spaces.
-API scope: 
-dashboards.genie
-Query parameters
+API scope: `dashboards.genie`
+#### Query parameters
 page_size
 int32
 <= 100
@@ -1931,9 +1928,8 @@ Response samples
 Public preview
 `GET /api/2.0/genie/spaces/{space_id}`
 Get details of a Genie Space.
-API scope: 
-dashboards.genie
-Path parameters
+API scope: `dashboards.genie`
+#### Path parameters
 space_id
 required
 uuid
@@ -1968,9 +1964,8 @@ Response samples
 Public preview
 `GET /api/2.0/genie/spaces/{space_id}/conversations`
 Get a list of conversations in a Genie Space.
-API scope: 
-dashboards.genie
-Path parameters
+API scope: `dashboards.genie`
+#### Path parameters
 space_id
 required
 uuid
@@ -2015,9 +2010,8 @@ Response samples
 Public preview
 `POST /api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages`
 Create new message in a conversation. The AI response uses all previously created messages in the conversation to respond.
-API scope: 
-dashboards.genie
-Path parameters
+API scope: `dashboards.genie`
+#### Path parameters
 space_id
 required
 uuid
@@ -2126,9 +2120,8 @@ Message created
 Public preview
 `GET /api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}`
 Get message from conversation.
-API scope: 
-dashboards.genie
-Path parameters
+API scope: `dashboards.genie`
+#### Path parameters
 space_id
 required
 uuid
@@ -2228,9 +2221,8 @@ Message created
 Public preview
 `POST /api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/attachments/{attachment_id}/execute-query`
 Execute the SQL for a message query attachment. Use this API when the query attachment has expired and needs to be re-executed.
-API scope: 
-dashboards.genie
-Path parameters
+API scope: `dashboards.genie`
+#### Path parameters
 space_id
 required
 uuid
@@ -2334,9 +2326,8 @@ Response samples
 Public preview
 `GET /api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/attachments/{attachment_id}/query-result`
 Get the result of SQL query if the message has a query attachment. This is only available if a message has a query attachment and the message status is EXECUTING_QUERY OR COMPLETED.
-API scope: 
-dashboards.genie
-Path parameters
+API scope: `dashboards.genie`
+#### Path parameters
 space_id
 required
 uuid
@@ -2440,9 +2431,8 @@ Response samples
 Public preview
 `POST /api/2.0/genie/spaces/{space_id}/start-conversation`
 Start a new conversation.
-API scope: 
-dashboards.genie
-Path parameters
+API scope: `dashboards.genie`
+#### Path parameters
 space_id
 required
 uuid
