@@ -867,16 +867,16 @@ API scope: `vectorsearch.vector-search-endpoints`
 * string
 * Token for pagination
 #### Responses
-200 
-Request completed successfully. The response includes a list of items and pagination information. If `next_page_token` is set, there are more results.
-Request completed successfully.
-The response includes a list of items and pagination information. If next_page_token is set, there are more results.
-endpoints
-Array of object
-An array of Endpoint objects
-next_page_token
-string
-A token that can be used to get the next page of results. If not present, there are no more results to show.
+##### `200 Request completed successfully.`
+* Request completed successfully. The response includes a list of items and pagination information. If `next_page_token` is set, there are more results.
+
+###### `endpoints`
+* Array of object
+* An array of Endpoint objects
+
+###### `next_page_token`
+* string
+* A token that can be used to get the next page of results. If not present, there are no more results to show.
 ##### Response samples
 
 ```json
@@ -910,9 +910,7 @@ API scope: `vectorsearch.vector-search-endpoints`
 * required string
 * Name of the endpoint
 #### Responses
-200 
-Request completed successfully.
-Request completed successfully.
+##### `200 Request completed successfully.`
 creation_timestamp
 int64
 Example 1702013512061
@@ -947,8 +945,8 @@ Name of the vector search endpoint
 num_indexes
 int32
 Number of indexes on the endpoint
-This method might return the following HTTP codes: 401, 404, 500
-Response samples
+##### This method might return the following HTTP codes: 401, 404, 500
+##### Response samples
 
 ```json
 {
@@ -984,16 +982,14 @@ API scope: `vectorsearch.vector-search-indexes`
 * string
 * Token for pagination
 #### Responses
-200 
-Request completed successfully.
-Request completed successfully.
+##### `200 Request completed successfully.`
 next_page_token
 string
 A token that can be used to get the next page of results. If not present, there are no more results to show.
 vector_indexes
 Array of object
-This method might return the following HTTP codes: 401, 404, 500
-Response samples
+##### This method might return the following HTTP codes: 401, 404, 500
+##### Response samples
 
 ```json
 {
@@ -1019,9 +1015,7 @@ API scope: `vectorsearch.vector-search-indexes`
 * required string
 * Name of the index
 #### Responses
-200 
-Request completed successfully.
-Request completed successfully.
+##### `200 Request completed successfully.`
 creator
 string
 The user who created the index.
@@ -1046,8 +1040,8 @@ string
 Primary key of the index
 status
 object
-This method might return the following HTTP codes: 400, 401, 404, 500
-Response samples
+##### This method might return the following HTTP codes: 400, 401, 404, 500
+##### Response samples
 
 Successful response for Delta Sync Index
 
@@ -1116,9 +1110,7 @@ score_threshold
 double
 Threshold for the approximate nearest neighbor search. Defaults to 0.0.
 #### Responses
-200 
-Request completed successfully.
-Request completed successfully.
+##### `200 Request completed successfully.`
 manifest
 object
 Metadata about the result set.
@@ -1128,8 +1120,8 @@ string
 result
 object
 Data returned in the query result.
-This method might return the following HTTP codes: 400, 401, 404, 500
-Request samples
+##### This method might return the following HTTP codes: 400, 401, 404, 500
+##### Request samples
 JSON
 
 Query using text
@@ -1143,7 +1135,7 @@ Query using text
   "query_text": "Databricks Vector Search"
 }
 ```
-Response samples
+##### Response samples
 
 ```json
 {
@@ -1197,9 +1189,7 @@ Request payload for getting next page of results.
 * string
 * Page token returned from previous QueryVectorIndex or QueryVectorIndexNextPage API.
 #### Responses
-200 
-Request completed successfully.
-Request completed successfully.
+##### `200 Request completed successfully.`
 manifest
 object
 Metadata about the result set.
@@ -1209,8 +1199,8 @@ string
 result
 object
 Data returned in the query result.
-This method might return the following HTTP codes: 400, 401, 404, 500
-Request samples
+##### This method might return the following HTTP codes: 400, 401, 404, 500
+##### Request samples
 JSON
 
 ```json
@@ -1219,7 +1209,7 @@ JSON
   "page_token": "dummy-page-token"
 }
 ```
-Response samples
+##### Response samples
 
 ```json
 {
@@ -1272,17 +1262,15 @@ Name of the vector index to scan.
 * int32
 * Number of results to return. Defaults to 10.
 #### Responses
-200 
-Request completed successfully.
-Request completed successfully.
+##### `200 Request completed successfully.`
 data
 Array of object
 List of data entries
 last_primary_key
 string
 Primary key of the last entry.
-This method might return the following HTTP codes: 400, 401, 404, 500
-Request samples
+##### This method might return the following HTTP codes: 400, 401, 404, 500
+##### Request samples
 JSON
 
 First scan request
@@ -1292,7 +1280,7 @@ First scan request
   "num_results": 2
 }
 ```
-Response samples
+##### Response samples
 
 ```json
 {
@@ -1383,16 +1371,17 @@ API scope: `sql.queries`
 ##### `page_size`
 * int32 (<= 100, default 20)
 #### Responses
-200 
-Request completed successfully. The response includes a list of items and pagination information. If `next_page_token` is set, there are more results.
-Request completed successfully.
-The response includes a list of items and pagination information. If next_page_token is set, there are more results.
-next_page_token
-string
-results
-Array of object
-This method might return the following HTTP codes: 400, 401, 500
-Response samples
+##### `200 Request completed successfully.`
+* Request completed successfully. The response includes a list of items and pagination information. If `next_page_token` is set, there are more results.
+
+###### `next_page_token`
+* string
+
+###### `results`
+* Array of object
+
+##### This method might return the following HTTP codes: 400, 401, 500
+##### Response samples
 
 ```json
 {
@@ -1460,9 +1449,7 @@ API scope: `sql.queries`
 ##### `id`
 * required string
 #### Responses
-200 
-Request completed successfully.
-Request completed successfully.
+##### `200 Request completed successfully.`
 apply_auto_limit
 boolean
 Whether to apply a 1000 row limit to the query result.
@@ -1523,8 +1510,8 @@ warehouse_id
 string
 Example "a7066a8ef796be84"
 ID of the SQL warehouse attached to the query.
-This method might return the following HTTP codes: 400, 401, 403, 404, 500
-Response samples
+##### This method might return the following HTTP codes: 400, 401, 403, 404, 500
+##### Response samples
 
 ```json
 {
@@ -1685,9 +1672,8 @@ required
 string
 Warehouse upon which to execute a statement. See also What are SQL warehouses?
 #### Responses
-200 
-StatementResponse contains `statement_id` and `status`; other fields might be absent or present depending on context. If the SQL warehouse fails to execute the provided statement, a 200 response is returned with `status.state` set to `FAILED` (in constract to a failure when accepting the request, which results in a non-200 response). Details of the error can be found at `status.error` in case of execution failures.
-StatementResponse contains statement_id and status; other fields might be absent or present depending on context. If the SQL warehouse fails to execute the provided statement, a 200 response is returned with status.state set to FAILED (in constract to a failure when accepting the request, which results in a non-200 response). Details of the error can be found at status.error in case of execution failures.
+##### `200 Request completed successfully.`
+* StatementResponse contains `statement_id` and `status`; other fields might be absent or present depending on context. If the SQL warehouse fails to execute the provided statement, a 200 response is returned with `status.state` set to `FAILED` (in constract to a failure when accepting the request, which results in a non-200 response). Details of the error can be found at `status.error` in case of execution failures.
 manifest
 object
 The result manifest provides schema and metadata for the result set.
@@ -1700,8 +1686,8 @@ The statement ID is returned upon successfully submitting a SQL statement, and i
 status
 object
 The status response includes execution state and if relevant, error information.
-This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
-Request samples
+##### This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
+##### Request samples
 JSON
 
 Asynchronous execution
@@ -1713,7 +1699,7 @@ Asynchronous execution
   "warehouse_id": "abcdef0123456789"
 }
 ```
-Response samples
+##### Response samples
 
 Statement failed with syntax errror
 
@@ -1740,9 +1726,8 @@ required
 string
 The statement ID is returned upon successfully submitting a SQL statement, and is a required reference for all subsequent calls.
 #### Responses
-200 
-StatementResponse contains `statement_id` and `status`; other fields might be absent or present depending on context. In case of an error during execution of the SQL statement -- as opposed to an error while processing the request -- a 200 response is returned with error details in the `status` field.
-StatementResponse contains statement_id and status; other fields might be absent or present depending on context. In case of an error during execution of the SQL statement -- as opposed to an error while processing the request -- a 200 response is returned with error details in the status field.
+##### `200 Request completed successfully.`
+* StatementResponse contains `statement_id` and `status`; other fields might be absent or present depending on context. In case of an error during execution of the SQL statement -- as opposed to an error while processing the request -- a 200 response is returned with error details in the `status` field.
 manifest
 object
 The result manifest provides schema and metadata for the result set.
@@ -1755,8 +1740,8 @@ The statement ID is returned upon successfully submitting a SQL statement, and i
 status
 object
 The status response includes execution state and if relevant, error information.
-This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
-Response samples
+##### This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
+##### Response samples
 
 Statement failed with syntax errror
 
@@ -1783,10 +1768,9 @@ required
 string
 The statement ID is returned upon successfully submitting a SQL statement, and is a required reference for all subsequent calls.
 #### Responses
-200 
-Cancel response is empty; receiving response indicates successful receipt.
-Cancel response is empty; receiving response indicates successful receipt.
-This method might return the following HTTP codes: 400, 401, 403, 429, 500, 503
+##### `200 Request completed successfully.`
+* Cancel response is empty; receiving response indicates successful receipt.
+##### This method might return the following HTTP codes: 400, 401, 403, 429, 500, 503
 
 ### Get result chunk by index
 `GET /api/2.0/sql/statements/{statement_id}/result/chunks/{chunk_index}`
@@ -1801,9 +1785,8 @@ chunk_index
 required
 int32
 #### Responses
-200 
-Successful return; depending on `disposition` returns chunks of data either inline, or as links.
-Successful return; depending on disposition returns chunks of data either inline, or as links.
+##### `200 Request completed successfully.`
+* Successful return; depending on `disposition` returns chunks of data either inline, or as links.
 byte_count
 int64
 The number of bytes in the result chunk. This field is not available when using INLINE disposition.
@@ -1827,8 +1810,8 @@ The number of rows within the result chunk.
 row_offset
 int64
 The starting row offset within the result set.
-This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
-Response samples
+##### This method might return the following HTTP codes: 400, 401, 403, 404, 429, 500, 503
+##### Response samples
 
 EXTERNAL_LINKS, has next chunk
 
@@ -1868,17 +1851,15 @@ page_token
 string
 Pagination token for getting the next page of results
 #### Responses
-200 
-Request completed successfully.
-Request completed successfully.
+##### `200 Request completed successfully.`
 next_page_token
 string
 Token to get the next page of results
 spaces
 Array of object
 List of Genie spaces
-This method might return the following HTTP codes: 400, 401, 403, 404, 500
-Response samples
+##### This method might return the following HTTP codes: 400, 401, 403, 404, 500
+##### Response samples
 
 ```json
 {
@@ -1905,9 +1886,7 @@ uuid
 Example "e1ef34712a29169db030324fd0e1df5f"
 The ID associated with the Genie space
 #### Responses
-200 
-Request completed successfully.
-Request completed successfully.
+##### `200 Request completed successfully.`
 description
 string
 Description of the Genie Space
@@ -1918,8 +1897,8 @@ Genie space ID
 title
 string
 Title of the Genie Space
-This method might return the following HTTP codes: 400, 401, 403, 404, 500
-Response samples
+##### This method might return the following HTTP codes: 400, 401, 403, 404, 500
+##### Response samples
 
 ```json
 {
@@ -1950,17 +1929,19 @@ page_token
 string
 Token to get the next page of results
 #### Responses
-200 
-Request completed successfully.
-Request completed successfully.
-conversations
-Array of object
-List of conversations in the Genie space
-next_page_token
-string
-Token to get the next page of results
-This method might return the following HTTP codes: 400, 401, 403, 404, 500
-Response samples
+##### `200 Request completed successfully.`
+* Request completed successfully.
+
+###### `conversations`
+* Array of object
+* List of conversations in the Genie space
+
+###### `next_page_token`
+* string
+* Token to get the next page of results
+
+##### This method might return the following HTTP codes: 400, 401, 403, 404, 500
+##### Response samples
 
 ```json
 {
@@ -1995,26 +1976,30 @@ API scope: `dashboards.genie`
 * Example "Biggest open opportunities"
 * User message content.
 #### Responses
-200 
-Request completed successfully.
-Request completed successfully.
-attachments
-Array of object
-AI-generated response to the message
-content
-string
-Example "Biggest open opportunities"
-User message content
-conversation_id
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-Conversation ID
-created_timestamp
-int64
-Timestamp when the message was created
-error
-object
-Error message if Genie failed to respond to the message
+##### `200 Request completed successfully.`
+* Request completed successfully.
+
+###### `attachments`
+* Array of object
+* AI-generated response to the message
+
+###### `content`
+* string
+* Example "Biggest open opportunities"
+* User message content
+
+###### `conversation_id`
+* uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Conversation ID
+
+###### `created_timestamp`
+* int64
+* Timestamp when the message was created
+
+###### `error`
+* object
+* Error message if Genie failed to respond to the message
 id
 uuid
 Deprecated
@@ -2053,8 +2038,8 @@ CANCELLED: Message has been cancelled.
 user_id
 int64
 ID of the user who created the message
-This method might return the following HTTP codes: 400, 401, 403, 404, 500
-Request samples
+##### This method might return the following HTTP codes: 400, 401, 403, 404, 500
+##### Request samples
 JSON
 
 ```json
@@ -2062,7 +2047,7 @@ JSON
   "content": "Give me top sales for last month"
 }
 ```
-Response samples
+##### Response samples
 
 Message created
 
@@ -2101,9 +2086,7 @@ API scope: `dashboards.genie`
 * Example "e1ef34712a29169db030324fd0e1df5f"
 * The ID associated with the target message from the identified conversation.
 #### Responses
-200 
-Request completed successfully.
-Request completed successfully.
+##### `200 Request completed successfully.`
 attachments
 Array of object
 AI-generated response to the message
@@ -2159,8 +2142,8 @@ CANCELLED: Message has been cancelled.
 user_id
 int64
 ID of the user who created the message
-This method might return the following HTTP codes: 401, 403, 404, 500
-Response samples
+##### This method might return the following HTTP codes: 401, 403, 404, 500
+##### Response samples
 
 Message created
 
@@ -2203,14 +2186,12 @@ API scope: `dashboards.genie`
 * Example "e1ef34712a29169db030324fd0e1df5f"
 * Attachment ID
 #### Responses
-200 
-Request completed successfully.
-Request completed successfully.
+##### `200 Request completed successfully.`
 statement_response
 object
 SQL Statement Execution response. See Get status, manifest, and result first chunk for more details.
-This method might return the following HTTP codes: 400, 401, 403, 404, 500
-Response samples
+##### This method might return the following HTTP codes: 400, 401, 403, 404, 500
+##### Response samples
 
 ```json
 {
@@ -2308,14 +2289,15 @@ uuid
 Example "e1ef34712a29169db030324fd0e1df5f"
 Attachment ID
 #### Responses
-200 
-Request completed successfully.
-Request completed successfully.
-statement_response
-object
-SQL Statement Execution response. See Get status, manifest, and result first chunk for more details.
-This method might return the following HTTP codes: 400, 401, 403, 404, 500
-Response samples
+##### `200 Request completed successfully.`
+* Request completed successfully.
+
+###### `statement_response`
+* object
+* SQL Statement Execution response. See Get status, manifest, and result first chunk for more details.
+
+##### This method might return the following HTTP codes: 400, 401, 403, 404, 500
+##### Response samples
 
 ```json
 {
@@ -2402,23 +2384,25 @@ API scope: `dashboards.genie`
 * Example "Biggest open opportunities"
 * The text of the message that starts the conversation.
 #### Responses
-200 
-Request completed successfully.
-Request completed successfully.
-conversation
-object
-conversation_id
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-Conversation ID
-message
-object
-message_id
-uuid
-Example "e1ef34712a29169db030324fd0e1df5f"
-Message ID
-This method might return the following HTTP codes: 400, 401, 403, 404, 500
-Request samples
+##### `200 Request completed successfully.`
+* Request completed successfully.
+
+###### `conversation`
+* object
+###### `conversation_id`
+* uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Conversation ID
+
+###### `message`
+* object
+###### `message_id`
+* uuid
+* Example "e1ef34712a29169db030324fd0e1df5f"
+* Message ID
+
+##### This method might return the following HTTP codes: 400, 401, 403, 404, 500
+##### Request samples
 JSON
 
 ```json
