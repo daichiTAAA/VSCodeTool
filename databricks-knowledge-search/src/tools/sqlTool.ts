@@ -17,10 +17,10 @@ export class SqlTool implements vscode.LanguageModelTool<ISqlParams> {
   async invoke(options: vscode.LanguageModelToolInvocationOptions<ISqlParams>, token: vscode.CancellationToken) {
     const gateway = new GatewayClient(this.logger);
     try {
-      const initial = await gateway.executeSql({ statement: options.input.statement });
+      const initial: any = await gateway.executeSql({ statement: options.input.statement });
       const statementId = (initial?.statement_id ?? initial?.statementId) as string | undefined;
       let state = (initial?.status?.state ?? initial?.state) as string | undefined;
-      let current = initial;
+      let current: any = initial;
       const deadline = Date.now() + 25_000;
       while (!token.isCancellationRequested && statementId && state && !['SUCCEEDED', 'FAILED', 'CANCELED'].includes(state) && Date.now() < deadline) {
         await new Promise((r) => setTimeout(r, 1000));
@@ -34,10 +34,10 @@ export class SqlTool implements vscode.LanguageModelTool<ISqlParams> {
         for (const it of res.external_links) {
           const url = typeof it === 'string' ? it : (it?.external_link ?? it?.link);
           if (typeof url === 'string') {
-            try { const fetched = await gateway.fetchExternalLink(url); if (fetched?.text) texts.push(fetched.text); } catch (e) { this.logger.warn('External link fetch failed', e); }
+            try { const fetched: any = await gateway.fetchExternalLink(url); if (fetched?.text) texts.push(fetched.text); } catch (e) { this.logger.warn('External link fetch failed', e as any); }
           }
         }
-        current = { ...current, expanded_external_text: texts.join('\n') };
+        current = { ...(current as any), expanded_external_text: texts.join('\n') } as any;
       }
 
       const part = options.input.format === 'json'
@@ -51,4 +51,3 @@ export class SqlTool implements vscode.LanguageModelTool<ISqlParams> {
     }
   }
 }
-

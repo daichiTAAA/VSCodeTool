@@ -24,88 +24,88 @@ export class GatewayClient {
   }
 
   // ----- SQL (hybrid) -----
-  async executeSql(req: SqlExecuteRequest) {
+  async executeSql(req: SqlExecuteRequest): Promise<any> {
     const body = { wait_timeout: '10s', on_wait_timeout: 'CONTINUE', ...req };
     return this.post('/api/2.0/sql/statements', body);
   }
 
-  async getStatement(statementId: string) {
+  async getStatement(statementId: string): Promise<any> {
     return this.get(`/api/2.0/sql/statements/${encodeURIComponent(statementId)}`);
   }
 
-  async getResultChunk(statementId: string, chunkIndex: number) {
+  async getResultChunk(statementId: string, chunkIndex: number): Promise<any> {
     return this.get(`/api/2.0/sql/statements/${encodeURIComponent(statementId)}/result/chunks/${chunkIndex}`);
   }
 
-  async fetchExternalLink(url: string) {
+  async fetchExternalLink(url: string): Promise<any> {
     // Gateway helper to ensure no Authorization header is sent to SAS
     return this.post('/api/2.0/sql/statements/external-links/fetch', { url });
   }
 
   // ----- Other APIs -----
-  async getQueryById(req: QueryByIdRequest) {
+  async getQueryById(req: QueryByIdRequest): Promise<any> {
     return this.get(`/api/2.0/sql/queries/${encodeURIComponent(req.id)}`);
   }
 
-  async vectorSearch(req: VectorSearchRequest) {
+  async vectorSearch(req: VectorSearchRequest): Promise<any> {
     return this.post('/api/2.0/vector-search/indexes/query', req);
   }
 
-  async servingInvoke(req: ServingInvokeRequest) {
+  async servingInvoke(req: ServingInvokeRequest): Promise<any> {
     return this.post(`/api/2.0/serving-endpoints/${encodeURIComponent(req.endpoint)}/invocations`, req.input);
   }
 
-  async genieAsk(req: GenieAskRequest) {
+  async genieAsk(req: GenieAskRequest): Promise<any> {
     return this.post(`/api/2.0/genie/spaces/${encodeURIComponent(req.spaceId)}/ask`, { question: req.question });
   }
 
   // ----- Serving Endpoints admin/listing -----
-  async servingList() { return this.get('/api/2.0/serving-endpoints'); }
-  async servingGet(name: string) { return this.get(`/api/2.0/serving-endpoints/${encodeURIComponent(name)}`); }
-  async servingOpenapi(name: string) { return this.get(`/api/2.0/serving-endpoints/${encodeURIComponent(name)}/openapi`); }
+  async servingList(): Promise<any> { return this.get('/api/2.0/serving-endpoints'); }
+  async servingGet(name: string): Promise<any> { return this.get(`/api/2.0/serving-endpoints/${encodeURIComponent(name)}`); }
+  async servingOpenapi(name: string): Promise<any> { return this.get(`/api/2.0/serving-endpoints/${encodeURIComponent(name)}/openapi`); }
 
   // ----- Vector Search endpoints/indexes -----
-  async vectorListEndpoints() { return this.get('/api/2.0/vector-search/endpoints'); }
-  async vectorGetEndpoint(name: string) { return this.get(`/api/2.0/vector-search/endpoints/${encodeURIComponent(name)}`); }
-  async vectorListIndexes() { return this.get('/api/2.0/vector-search/indexes'); }
-  async vectorGetIndex(name: string) { return this.get(`/api/2.0/vector-search/indexes/${encodeURIComponent(name)}`); }
-  async vectorQueryNextPage(req: PagingRequest) { return this.post('/api/2.0/vector-search/indexes/query/next-page', req); }
-  async vectorScan(indexName: string, num_results?: number, primary_key?: string) {
+  async vectorListEndpoints(): Promise<any> { return this.get('/api/2.0/vector-search/endpoints'); }
+  async vectorGetEndpoint(name: string): Promise<any> { return this.get(`/api/2.0/vector-search/endpoints/${encodeURIComponent(name)}`); }
+  async vectorListIndexes(): Promise<any> { return this.get('/api/2.0/vector-search/indexes'); }
+  async vectorGetIndex(name: string): Promise<any> { return this.get(`/api/2.0/vector-search/indexes/${encodeURIComponent(name)}`); }
+  async vectorQueryNextPage(req: PagingRequest): Promise<any> { return this.post('/api/2.0/vector-search/indexes/query/next-page', req); }
+  async vectorScan(indexName: string, num_results?: number, primary_key?: string): Promise<any> {
     return this.post('/api/2.0/vector-search/indexes/scan', { indexName, num_results, primary_key });
   }
 
   // ----- Queries API -----
-  async queriesList() { return this.get('/api/2.0/sql/queries'); }
+  async queriesList(): Promise<any> { return this.get('/api/2.0/sql/queries'); }
 
   // ----- Genie API -----
-  async genieListSpaces() { return this.get('/api/2.0/genie/spaces'); }
-  async genieGetSpace(spaceId: string) { return this.get(`/api/2.0/genie/spaces/${encodeURIComponent(spaceId)}`); }
-  async genieListConversations(spaceId: string) { return this.get(`/api/2.0/genie/spaces/${encodeURIComponent(spaceId)}/conversations`); }
-  async genieCreateMessage(spaceId: string, conversationId: string, body: unknown) {
+  async genieListSpaces(): Promise<any> { return this.get('/api/2.0/genie/spaces'); }
+  async genieGetSpace(spaceId: string): Promise<any> { return this.get(`/api/2.0/genie/spaces/${encodeURIComponent(spaceId)}`); }
+  async genieListConversations(spaceId: string): Promise<any> { return this.get(`/api/2.0/genie/spaces/${encodeURIComponent(spaceId)}/conversations`); }
+  async genieCreateMessage(spaceId: string, conversationId: string, body: unknown): Promise<any> {
     return this.post(`/api/2.0/genie/spaces/${encodeURIComponent(spaceId)}/conversations/${encodeURIComponent(conversationId)}/messages`, body);
   }
-  async genieGetMessage(spaceId: string, conversationId: string, messageId: string) {
+  async genieGetMessage(spaceId: string, conversationId: string, messageId: string): Promise<any> {
     return this.get(`/api/2.0/genie/spaces/${encodeURIComponent(spaceId)}/conversations/${encodeURIComponent(conversationId)}/messages/${encodeURIComponent(messageId)}`);
   }
-  async genieExecAttachmentQuery(spaceId: string, conversationId: string, messageId: string, attachmentId: string) {
+  async genieExecAttachmentQuery(spaceId: string, conversationId: string, messageId: string, attachmentId: string): Promise<any> {
     return this.post(`/api/2.0/genie/spaces/${encodeURIComponent(spaceId)}/conversations/${encodeURIComponent(conversationId)}/messages/${encodeURIComponent(messageId)}/attachments/${encodeURIComponent(attachmentId)}/execute-query`, {});
   }
-  async genieGetAttachmentResult(spaceId: string, conversationId: string, messageId: string, attachmentId: string) {
+  async genieGetAttachmentResult(spaceId: string, conversationId: string, messageId: string, attachmentId: string): Promise<any> {
     return this.get(`/api/2.0/genie/spaces/${encodeURIComponent(spaceId)}/conversations/${encodeURIComponent(conversationId)}/messages/${encodeURIComponent(messageId)}/attachments/${encodeURIComponent(attachmentId)}/query-result`);
   }
-  async genieStartConversation(spaceId: string, title?: string) {
+  async genieStartConversation(spaceId: string, title?: string): Promise<any> {
     return this.post(`/api/2.0/genie/spaces/${encodeURIComponent(spaceId)}/start-conversation`, title ? { title } : {});
   }
   // ----- HTTP helpers -----
-  private async get(path: string) {
+  private async get(path: string): Promise<any> {
     return this.request('GET', path);
   }
 
-  private async post(path: string, body: unknown) {
+  private async post(path: string, body: unknown): Promise<any> {
     return this.request('POST', path, body);
   }
 
-  private async request(method: 'GET' | 'POST', path: string, body?: unknown) {
+  private async request(method: 'GET' | 'POST', path: string, body?: unknown): Promise<any> {
     if (!this.baseUrl) {
       throw new Error('Gateway URL が設定されていません。設定 "databricks-knowledge-search.gatewayUrl" を確認してください。');
     }

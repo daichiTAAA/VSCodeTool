@@ -32,8 +32,11 @@ Azure Databricks のナレッジベースに VS Code からクエリするため
 ```
 
 ### 開発
-```
+```bash
 npm install
 npm run watch
-F5 で拡張を起動
+# VS Code でこのフォルダを開き、以下のいずれかの方法で拡張を起動（Extension Development Host）
+# 方法1: F5キー（MacでF5が音声入力になる場合は方法2を使用）
+# 方法2: Cmd + Shift + P → "Debug: Start Debugging" を実行
+# 方法3: Cmd + Shift + D でデバッグビュー → 緑の再生ボタンをクリック
 ```
