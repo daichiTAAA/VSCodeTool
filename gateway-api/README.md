@@ -26,6 +26,21 @@ echo "DATABRICKS_WORKSPACE_URL=https://adb-xxxxx.azuredatabricks.net" >> gateway
 docker compose up --build -d
 ```
 
+### リクエストログ（Invalid HTTP 対応の補助）
+- アプリ層のアクセスログ: `REQUEST_LOGGING=basic|body|off`（既定: basic）
+  - `basic`: メソッド/パス/クエリ/主要ヘッダ（Authorization 等はマスク）
+  - `body`: 本文を最大 `MAX_BODY_LOG` バイトまでログ（PII に注意）
+- 例（`.env` へ）:
+```
+echo "REQUEST_LOGGING=body" >> gateway-api/.env
+echo "MAX_BODY_LOG=2048" >> gateway-api/.env
+```
+- Uvicorn のパーサ段階で起きる `WARNING: Invalid HTTP request received.` はアプリ層に到達しないため本文は取得できません。詳細を得るにはサーバーログを詳細化してください:
+```
+echo "UVICORN_CMD_ARGS=--access-log --log-level debug" >> gateway-api/.env
+docker compose up -d
+```
+
 ### エンドポイント (抜粋)
 - Databricks SQL: `POST/GET/POST/GET /sql/statements...`, `GET /sql/queries`, `GET /sql/queries/{id}`
 - Vector Search: `GET /vector-search/endpoints`, `GET /vector-search/endpoints/{name}`, `GET /vector-search/indexes`, `GET /vector-search/indexes/{name}`, `POST /vector-search/indexes/query`, `POST /vector-search/indexes/query/next-page`, `POST /vector-search/indexes/scan`

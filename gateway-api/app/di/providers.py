@@ -11,8 +11,8 @@ class TokenProvider(ABC):
 
 
 class EnvTokenProvider(TokenProvider):
-    def __init__(self, env_key: str = "DATABRICKS_PAT") -> None:
-        self.env_key = env_key
+    def __init__(self) -> None:
+        self.env_key = "DATABRICKS_PAT"
 
     async def get_token(self) -> str:
         token = os.getenv(self.env_key)
@@ -52,7 +52,7 @@ class KeyVaultTokenProvider(TokenProvider):
 def get_provider(di_mode: str | None = None) -> TokenProvider:
     mode = (di_mode or os.getenv("DI_PROVIDER") or "env").lower()
     if mode == "env":
-        return EnvTokenProvider(os.getenv("DATABRICKS_PAT_ENV_KEY", "DATABRICKS_PAT"))
+        return EnvTokenProvider()
     if mode == "keyvault":
         vault_url = os.getenv("KEYVAULT_URL") or os.getenv("AZURE_KEYVAULT_URL")
         secret_name = os.getenv("SECRET_NAME") or os.getenv(
@@ -66,4 +66,3 @@ def get_provider(di_mode: str | None = None) -> TokenProvider:
     raise RuntimeError(
         f"Unknown DI_PROVIDER '{mode}'. Use 'env' or 'keyvault'."
     )
-

@@ -43,6 +43,7 @@ code .
 npm install
 npm run watch
 # 以下のいずれかの方法で拡張を起動（Extension Development Host）
+# databricks-knowledge-search/src/extension.tsを開いた状態で実施する。
 # 方法1: F5キー（MacでF5が音声入力になる場合は方法2を使用）
 # 方法2: Cmd + Shift + P → "Debug: Start Debugging" を実行
 # 方法3: Cmd + Shift + D でデバッグビュー → 緑の再生ボタンをクリック

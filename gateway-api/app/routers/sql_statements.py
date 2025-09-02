@@ -15,7 +15,7 @@ class SqlRequest(BaseModel):
     wait_timeout: str | None = None
     on_wait_timeout: str | None = None
     catalog: str | None = None
-    schema: str | None = None
+    sql_schema: str | None = None  # renamed to avoid pydantic BaseModel.schema clash
     parameters: dict | None = None
 
 
@@ -28,6 +28,9 @@ async def post_statement(req: SqlRequest, client: DatabricksClient = Depends(get
     # Hybrid mode defaults
     body.setdefault('wait_timeout', '10s')
     body.setdefault('on_wait_timeout', 'CONTINUE')
+    # rename sql_schema -> schema for upstream API
+    if 'sql_schema' in body and 'schema' not in body:
+        body['schema'] = body.pop('sql_schema')
 
     return await client.request_json('POST', '/api/2.0/sql/statements', json=body)
 

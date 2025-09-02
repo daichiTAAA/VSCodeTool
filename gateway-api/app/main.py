@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .routers import sql_statements, queries, vector_search, serving_endpoints, genie
 from .middleware.auth import auth_middleware
+from .middleware.request_logger import RequestLoggingMiddleware
 
 
 def create_app() -> FastAPI:
@@ -17,6 +18,7 @@ def create_app() -> FastAPI:
     )
 
     app.middleware('http')(auth_middleware)
+    app.add_middleware(RequestLoggingMiddleware)
 
     app.include_router(sql_statements.router, prefix="/api/2.0/sql")
     app.include_router(queries.router, prefix="/api/2.0/sql")
@@ -32,4 +34,3 @@ def create_app() -> FastAPI:
 
 
 app = create_app()
-

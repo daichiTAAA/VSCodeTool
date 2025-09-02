@@ -19,7 +19,7 @@
       "properties": {
         "databricks-knowledge-search.gatewayUrl": {
           "type": "string",
-          "default": "https://localhost:8000",
+          "default": "http://localhost:8000",
           "description": "Gateway API のベースURL"
         },
         "databricks-knowledge-search.timeout": {
