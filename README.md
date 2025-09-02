@@ -38,13 +38,17 @@ docker compose up --build -d
 
 ```bash
 cd databricks-knowledge-search
+# VS Code でこのフォルダを開く
+code .
 npm install
 npm run watch
-# VS Code でこのフォルダを開き、以下のいずれかの方法で拡張を起動（Extension Development Host）
+# 以下のいずれかの方法で拡張を起動（Extension Development Host）
 # 方法1: F5キー（MacでF5が音声入力になる場合は方法2を使用）
 # 方法2: Cmd + Shift + P → "Debug: Start Debugging" を実行
 # 方法3: Cmd + Shift + D でデバッグビュー → 緑の再生ボタンをクリック
 ```
+
+GitHub Copilotの入力欄の右下のConfigure Toolsをクリックし、Extension: Databricks Knowledge Searchが表示されていることを確認する。
 
 拡張の詳細・入力スキーマ・使用例は `databricks-knowledge-search/README.md` を参照してください。VSIX 署名や企業配布は下記ドキュメントを参照してください。
 
