@@ -7,40 +7,28 @@ Azure Databricks のナレッジベースに VS Code からクエリするため
 - `databricks-knowledge-search.timeout`: タイムアウト (ms)
 - `databricks-knowledge-search.authToken`: 任意の Bearer トークン (企業の OAuth/SSO を使用する場合は空)
 
-### ツール: `dbxSearch`
-Input Schema:
-```
-{
-  mode: 'sql' | 'query' | 'vector' | 'serving' | 'genie',
-  operation?: string, // modeに応じた操作（serving: invoke|list|get|openapi など）
-  query?: string,
-  resourceId?: string,
-  conversationId?: string,
-  messageId?: string,
-  attachmentId?: string,
-  payload?: object,
-  nextPageToken?: string,
-  topK?: number,
-  format?: 'markdown' | 'json'
-}
-```
-
+### ツール一覧
+- `dbxSql` (`databricks-knowledge-search_sql`): SQL 実行（ハイブリッド/EXTERNAL_LINKS対応）
+- `dbxVectorSearch` (`databricks-knowledge-search_vector`): Vector Search のクエリ/ページング/スキャン/リスト
+- `dbxServing` (`databricks-knowledge-search_serving`): Serving invoke / list / get / openapi
+- `dbxQueries` (`databricks-knowledge-search_queries`): 保存済みクエリの一覧/取得
+- `dbxGenie` (`databricks-knowledge-search_genie`): Genie のスペース/会話/メッセージ操作
 ### 使い方 (Copilot Chat)
 ```
-# Vector 検索
-@tools:dbxSearch { "mode": "vector", "query": "lakehouse セキュリティ", "resourceId": "kb_documents_default", "topK": 5 }
-
-# Vector 一覧
-@tools:dbxSearch { "mode": "vector", "operation": "listIndexes" }
-
 # SQL 実行
-@tools:dbxSearch { "mode": "sql", "query": "SELECT 'hello' as greeting" }
+@tools:dbxSql { "statement": "SELECT 'hello' as greeting" }
+
+# Vector 検索
+@tools:dbxVectorSearch { "operation": "query", "indexName": "kb_documents_default", "query": "unity catalog", "topK": 5 }
 
 # Serving 呼び出し
-@tools:dbxSearch { "mode": "serving", "operation": "invoke", "resourceId": "my-endpoint", "payload": { "input": "hello" } }
+@tools:dbxServing { "operation": "invoke", "endpoint": "my-endpoint", "payload": { "input": "hello" } }
 
-# Genie 会話作成
-@tools:dbxSearch { "mode": "genie", "operation": "startConversation", "resourceId": "space-abc", "query": "Title" }
+# Queries 一覧
+@tools:dbxQueries { "operation": "list" }
+
+# Genie: 会話開始
+@tools:dbxGenie { "operation": "startConversation", "spaceId": "space-abc", "title": "Sales Trend" }
 ```
 
 ### 開発

@@ -36,51 +36,100 @@
     },
     "languageModelTools": [
       {
-        "name": "databricks-knowledge-search_search",
-        "toolReferenceName": "dbxSearch",
-        "displayName": "Databricks Knowledge Search",
-        "tags": ["databricks", "search", "knowledge", "sql", "vector"],
-        "modelDescription": "Azure Databricks のナレッジベースを検索し、引用可能な結果を返します。",
+        "name": "databricks-knowledge-search_sql",
+        "toolReferenceName": "dbxSql",
+        "displayName": "Databricks SQL (Hybrid)",
+        "userDescription": "SQL を実行し、必要に応じて結果をフェッチ（EXTERNAL_LINKS対応）",
+        "tags": ["databricks", "sql", "warehouse", "statements"],
+        "modelDescription": "Executes a SQL statement on a Databricks SQL warehouse using hybrid mode (wait_timeout=10s, on_wait_timeout=CONTINUE). Handles EXTERNAL_LINKS expansion.",
+        "canBeReferencedInPrompt": true,
+        "icon": "$(database)",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "statement": { "type": "string", "description": "SQL statement to execute" },
+            "format": { "type": "string", "enum": ["markdown", "json"], "default": "markdown" }
+          },
+          "required": ["statement"]
+        }
+      },
+      {
+        "name": "databricks-knowledge-search_vector",
+        "toolReferenceName": "dbxVectorSearch",
+        "displayName": "Vector Search",
+        "userDescription": "Vector Search のクエリ/ページング/スキャン/リスト",
+        "tags": ["databricks", "vector", "search"],
+        "modelDescription": "Runs semantic vector search queries against a configured index and lists endpoints/indexes.",
         "canBeReferencedInPrompt": true,
         "icon": "$(search)",
         "inputSchema": {
           "type": "object",
           "properties": {
-            "mode": {
-              "type": "string",
-              "enum": ["sql", "query", "vector", "serving", "genie"],
-              "description": "使用する Databricks API のモード"
-            },
-            "operation": {
-              "type": "string",
-              "description": "モード毎の操作。例: serving→invoke|list|get|openapi, vector→query|listEndpoints|getEndpoint|listIndexes|getIndex|nextPage|scan, query→list|get, genie→listSpaces|getSpace|listConversations|createMessage|getMessage|executeAttachmentQuery|getAttachmentQueryResult|startConversation"
-            },
-            "query": {
-              "type": "string",
-              "description": "検索キーワードや SQL 文／質問文"
-            },
-            "resourceId": {
-              "type": "string",
-              "description": "クエリID／インデックス名／エンドポイント名／スペースIDなど"
-            },
-            "conversationId": { "type": "string", "description": "Genie の会話ID" },
-            "messageId": { "type": "string", "description": "Genie のメッセージID" },
-            "attachmentId": { "type": "string", "description": "Genie のアタッチメントID" },
-            "payload": { "type": "object", "description": "生のリクエストボディ（serving/Genie等の柔軟入力）" },
-            "nextPageToken": { "type": "string", "description": "ページングトークン（Vector Searchなど）" },
-            "topK": {
-              "type": "number",
-              "default": 5,
-              "description": "ベクトル検索の上位件数"
-            },
-            "format": {
-              "type": "string",
-              "enum": ["markdown", "json"],
-              "default": "markdown",
-              "description": "返却形式"
-            }
-          },
-          "required": ["mode"]
+            "operation": { "type": "string", "enum": ["query", "nextPage", "scan", "listEndpoints", "getEndpoint", "listIndexes", "getIndex"], "default": "query" },
+            "indexName": { "type": "string", "description": "Index name (query/scan/getIndex)" },
+            "query": { "type": "string", "description": "Query text (query)" },
+            "topK": { "type": "number", "default": 5 },
+            "nextPageToken": { "type": "string" },
+            "endpointName": { "type": "string", "description": "Endpoint name (getEndpoint)" }
+          }
+        }
+      },
+      {
+        "name": "databricks-knowledge-search_serving",
+        "toolReferenceName": "dbxServing",
+        "displayName": "Serving Endpoints",
+        "userDescription": "Serving の invoke / list / get / openapi",
+        "tags": ["databricks", "serving", "inference"],
+        "modelDescription": "Invokes a Databricks serving endpoint or lists/gets endpoints and OpenAPI schema.",
+        "canBeReferencedInPrompt": true,
+        "icon": "$(server)",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "operation": { "type": "string", "enum": ["invoke", "list", "get", "openapi"], "default": "invoke" },
+            "endpoint": { "type": "string", "description": "Endpoint name (invoke/get/openapi)" },
+            "payload": { "type": "object", "description": "Invocation payload" }
+          }
+        }
+      },
+      {
+        "name": "databricks-knowledge-search_queries",
+        "toolReferenceName": "dbxQueries",
+        "displayName": "SQL Queries",
+        "userDescription": "保存済みクエリの取得/一覧",
+        "tags": ["databricks", "sql", "queries"],
+        "modelDescription": "Lists saved queries or gets a query by id from Databricks SQL.",
+        "canBeReferencedInPrompt": true,
+        "icon": "$(list-unordered)",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "operation": { "type": "string", "enum": ["list", "get"], "default": "list" },
+            "id": { "type": "string", "description": "Query id (get)" }
+          }
+        }
+      },
+      {
+        "name": "databricks-knowledge-search_genie",
+        "toolReferenceName": "dbxGenie",
+        "displayName": "Genie",
+        "userDescription": "Genie のスペース/会話/メッセージ操作",
+        "tags": ["databricks", "genie", "bi", "chat"],
+        "modelDescription": "Works with Genie spaces, conversations, and messages (start conversation, list spaces, create message, etc.)",
+        "canBeReferencedInPrompt": true,
+        "icon": "$(comment-discussion)",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "operation": { "type": "string", "enum": ["listSpaces", "getSpace", "listConversations", "startConversation", "createMessage", "getMessage", "executeAttachmentQuery", "getAttachmentQueryResult"], "default": "listSpaces" },
+            "spaceId": { "type": "string" },
+            "conversationId": { "type": "string" },
+            "messageId": { "type": "string" },
+            "attachmentId": { "type": "string" },
+            "title": { "type": "string", "description": "startConversation のタイトル" },
+            "body": { "type": "string", "description": "createMessage の本文" },
+            "payload": { "type": "object", "description": "任意の追加パラメータ" }
+          }
         }
       }
     ]
