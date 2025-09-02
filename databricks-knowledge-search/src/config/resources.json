@@ -1,0 +1,15 @@
+{
+  "queries": [
+    { "id": "1234567890abcdef", "name": "Knowledge Articles by Tag" }
+  ],
+  "vectorIndexes": [
+    { "name": "kb_documents_default", "description": "KB ドキュメント用インデックス" }
+  ],
+  "servingEndpoints": [
+    { "name": "kb-embedding-endpoint", "description": "埋め込み生成" }
+  ],
+  "genieSpaces": [
+    { "id": "space-abc", "name": "KB Analyst Space" }
+  ]
+}
+

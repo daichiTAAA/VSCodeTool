@@ -1,0 +1,8 @@
+server:
+  host: 0.0.0.0
+  port: 8000
+
+databricks:
+  workspace_url: "https://adb-xxxxx.azuredatabricks.net"
+  token_secret: "kv://secret/databricks/pat"
+

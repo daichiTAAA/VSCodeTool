@@ -1,0 +1,104 @@
+{
+  "name": "databricks-knowledge-search",
+  "publisher": "company",
+  "displayName": "Databricks Knowledge Search",
+  "description": "Azure Databricks ナレッジベース検索ツール (LM Tools)",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "AI",
+    "Chat"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [],
+  "contributes": {
+    "configuration": {
+      "title": "Databricks Knowledge Search",
+      "properties": {
+        "databricks-knowledge-search.gatewayUrl": {
+          "type": "string",
+          "default": "https://api.company.com/knowledge",
+          "description": "Gateway API のベースURL"
+        },
+        "databricks-knowledge-search.timeout": {
+          "type": "number",
+          "default": 10000,
+          "description": "HTTP リクエストのタイムアウト (ms)"
+        },
+        "databricks-knowledge-search.authToken": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "任意: Gateway API 用の Bearer トークン。企業の OAuth/SSO を使う場合は空のままにします。"
+        }
+      }
+    },
+    "languageModelTools": [
+      {
+        "name": "databricks-knowledge-search_search",
+        "toolReferenceName": "dbxSearch",
+        "displayName": "Databricks Knowledge Search",
+        "tags": ["databricks", "search", "knowledge", "sql", "vector"],
+        "modelDescription": "Azure Databricks のナレッジベースを検索し、引用可能な結果を返します。",
+        "canBeReferencedInPrompt": true,
+        "icon": "$(search)",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": ["sql", "query", "vector", "serving", "genie"],
+              "description": "使用する Databricks API のモード"
+            },
+            "operation": {
+              "type": "string",
+              "description": "モード毎の操作。例: serving→invoke|list|get|openapi, vector→query|listEndpoints|getEndpoint|listIndexes|getIndex|nextPage|scan, query→list|get, genie→listSpaces|getSpace|listConversations|createMessage|getMessage|executeAttachmentQuery|getAttachmentQueryResult|startConversation"
+            },
+            "query": {
+              "type": "string",
+              "description": "検索キーワードや SQL 文／質問文"
+            },
+            "resourceId": {
+              "type": "string",
+              "description": "クエリID／インデックス名／エンドポイント名／スペースIDなど"
+            },
+            "conversationId": { "type": "string", "description": "Genie の会話ID" },
+            "messageId": { "type": "string", "description": "Genie のメッセージID" },
+            "attachmentId": { "type": "string", "description": "Genie のアタッチメントID" },
+            "payload": { "type": "object", "description": "生のリクエストボディ（serving/Genie等の柔軟入力）" },
+            "nextPageToken": { "type": "string", "description": "ページングトークン（Vector Searchなど）" },
+            "topK": {
+              "type": "number",
+              "default": 5,
+              "description": "ベクトル検索の上位件数"
+            },
+            "format": {
+              "type": "string",
+              "enum": ["markdown", "json"],
+              "default": "markdown",
+              "description": "返却形式"
+            }
+          },
+          "required": ["mode"]
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -w -p ./",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@vscode/chat-extension-utils": "^0.0.0-alpha.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@types/node": "^22",
+    "@types/vscode": "^1.100.0",
+    "eslint": "^9.13.0",
+    "typescript": "^5.9.2"
+  }
+}

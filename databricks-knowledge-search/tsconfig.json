@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "Node16",
+    "target": "ES2024",
+    "lib": ["ES2024"],
+    "rootDir": "src",
+    "outDir": "out",
+    "sourceMap": true,
+    "strict": true,
+    "jsx": "react",
+    "jsxFactory": "vscpp",
+    "jsxFragmentFactory": "vscppf"
+  }
+}
+

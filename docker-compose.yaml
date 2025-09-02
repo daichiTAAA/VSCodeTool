@@ -1,0 +1,21 @@
+services:
+  gateway:
+    build:
+      context: ./gateway-api
+    container_name: databricks-gateway
+    ports:
+      - "8000:8000"
+    environment:
+      # Switch DI container here: 'env' or 'keyvault'
+      - DI_PROVIDER=${DI_PROVIDER:-env}
+      # EnvTokenProvider
+      - DATABRICKS_PAT=${DATABRICKS_PAT}
+      - DATABRICKS_PAT_ENV_KEY=${DATABRICKS_PAT_ENV_KEY:-DATABRICKS_PAT}
+      # KeyVaultTokenProvider
+      - KEYVAULT_URL=${KEYVAULT_URL}
+      - SECRET_NAME=${SECRET_NAME}
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    env_file:
+      - ./gateway-api/.env
+    restart: unless-stopped
+
