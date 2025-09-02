@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, ConfigDict
 from ..deps.dbx import get_databricks_client
 from ..services.databricks_client import DatabricksClient
 
@@ -7,21 +7,27 @@ router = APIRouter()
 
 
 class SqlRequest(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
     statement: str | None = None
     # For Databricks SQL API, v2.0 expects { statement, wait_timeout, on_wait_timeout, ... }
     # Keep open structure for forward-compat
     # Accept legacy field 'sql' from our earlier stub
     sql: str | None = None
+    # Warehouse
+    warehouse_id: str | None = Field(default=None, alias='warehouseId')
     wait_timeout: str | None = None
     on_wait_timeout: str | None = None
     catalog: str | None = None
-    sql_schema: str | None = None  # renamed to avoid pydantic BaseModel.schema clash
+    sql_schema: str | None = Field(default=None, alias='schema')  # avoid BaseModel.schema clash
     parameters: dict | None = None
+    # Result options
+    format: str | None = None  # JSON_ARRAY | ARROW_STREAM | CSV
+    disposition: str | None = None  # INLINE | EXTERNAL_LINKS
 
 
 @router.post("/statements")
 async def post_statement(req: SqlRequest, client: DatabricksClient = Depends(get_databricks_client)):
-    body = req.model_dump(exclude_none=True)
+    body = req.model_dump(exclude_none=True, by_alias=False)
     # Back-compat: if 'sql' is provided map to 'statement'
     if 'sql' in body and 'statement' not in body:
         body['statement'] = body.pop('sql')
@@ -31,6 +37,7 @@ async def post_statement(req: SqlRequest, client: DatabricksClient = Depends(get
     # rename sql_schema -> schema for upstream API
     if 'sql_schema' in body and 'schema' not in body:
         body['schema'] = body.pop('sql_schema')
+    # if warehouseId alias used, it's already mapped to warehouse_id by model_dump(by_alias=False)
 
     return await client.request_json('POST', '/api/2.0/sql/statements', json=body)
 

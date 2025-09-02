@@ -31,6 +31,11 @@
           "type": "string",
           "default": "",
           "markdownDescription": "任意: Gateway API 用の Bearer トークン。企業の OAuth/SSO を使う場合は空のままにします。"
+        },
+        "databricks-knowledge-search.defaultWarehouseId": {
+          "type": "string",
+          "default": "",
+          "description": "任意: dbxSql で未指定のときに使用するデフォルトの warehouse_id"
         }
       }
     },
@@ -48,9 +53,17 @@
           "type": "object",
           "properties": {
             "statement": { "type": "string", "description": "SQL statement to execute" },
+            "warehouseId": { "type": "string", "description": "Target Databricks SQL warehouse id" },
+            "catalog": { "type": "string" },
+            "schema": { "type": "string" },
+            "parameters": { "type": "object", "description": "Named parameters for the statement" },
+            "resultFormat": { "type": "string", "enum": ["JSON_ARRAY", "ARROW_STREAM", "CSV"], "description": "Databricks result format" },
+            "disposition": { "type": "string", "enum": ["INLINE", "EXTERNAL_LINKS"], "description": "Result disposition" },
+            "waitTimeout": { "type": "string", "description": "e.g. 10s" },
+            "onWaitTimeout": { "type": "string", "enum": ["CONTINUE", "CANCEL"], "description": "Action when wait timeout occurs" },
             "format": { "type": "string", "enum": ["markdown", "json"], "default": "markdown" }
           },
-          "required": ["statement"]
+          "required": ["statement", "warehouseId"]
         }
       },
       {

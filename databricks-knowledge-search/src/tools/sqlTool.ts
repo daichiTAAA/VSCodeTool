@@ -2,7 +2,18 @@ import * as vscode from 'vscode';
 import { Logger } from '../utils/logger';
 import { GatewayClient } from '../services/gatewayClient';
 
-interface ISqlParams { statement: string; format?: 'markdown' | 'json' }
+interface ISqlParams {
+  statement: string;
+  warehouseId: string;
+  catalog?: string;
+  schema?: string;
+  parameters?: Record<string, unknown>;
+  resultFormat?: 'JSON_ARRAY' | 'ARROW_STREAM' | 'CSV';
+  disposition?: 'INLINE' | 'EXTERNAL_LINKS';
+  waitTimeout?: string;
+  onWaitTimeout?: 'CONTINUE' | 'CANCEL';
+  format?: 'markdown' | 'json'; // display format
+}
 
 export class SqlTool implements vscode.LanguageModelTool<ISqlParams> {
   constructor(private logger: Logger) {}
@@ -11,13 +22,34 @@ export class SqlTool implements vscode.LanguageModelTool<ISqlParams> {
     const md = new vscode.MarkdownString();
     md.appendMarkdown('Databricks SQL を実行します。');
     md.appendCodeblock(options.input.statement, 'sql');
+    md.appendMarkdown(`\n- warehouseId: ${options.input.warehouseId}`);
     return { invocationMessage: 'Executing SQL on Databricks', confirmationMessages: { title: 'Execute SQL', message: md } };
   }
 
   async invoke(options: vscode.LanguageModelToolInvocationOptions<ISqlParams>, token: vscode.CancellationToken) {
     const gateway = new GatewayClient(this.logger);
     try {
-      const initial: any = await gateway.executeSql({ statement: options.input.statement });
+      // Fallback to configured default warehouse id if not provided
+      const cfg = vscode.workspace.getConfiguration('databricks-knowledge-search');
+      const fallbackWh = (cfg.get<string>('defaultWarehouseId') || '').trim() || undefined;
+      const warehouseId = options.input.warehouseId || fallbackWh;
+      if (!warehouseId) {
+        return new vscode.LanguageModelToolResult([
+          new vscode.LanguageModelTextPart('warehouseId が指定されていません。設定 databricks-knowledge-search.defaultWarehouseId を指定するか、パラメータで warehouseId を渡してください。')
+        ]);
+      }
+
+      const initial: any = await gateway.executeSql({
+        statement: options.input.statement,
+        warehouse_id: warehouseId,
+        catalog: options.input.catalog,
+        schema: options.input.schema,
+        parameters: options.input.parameters,
+        format: options.input.resultFormat,
+        disposition: options.input.disposition,
+        wait_timeout: options.input.waitTimeout,
+        on_wait_timeout: options.input.onWaitTimeout,
+      });
       const statementId = (initial?.statement_id ?? initial?.statementId) as string | undefined;
       let state = (initial?.status?.state ?? initial?.state) as string | undefined;
       let current: any = initial;

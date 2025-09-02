@@ -2,7 +2,17 @@ import * as vscode from 'vscode';
 import { Logger } from '../utils/logger';
 import { AuthService } from './authService';
 
-export interface SqlExecuteRequest { statement: string; wait_timeout?: string; on_wait_timeout?: string; }
+export interface SqlExecuteRequest {
+  statement: string;
+  warehouse_id?: string;
+  catalog?: string;
+  schema?: string;
+  parameters?: Record<string, unknown>;
+  wait_timeout?: string;
+  on_wait_timeout?: string;
+  format?: 'JSON_ARRAY' | 'ARROW_STREAM' | 'CSV';
+  disposition?: 'INLINE' | 'EXTERNAL_LINKS';
+}
 export interface VectorSearchRequest { indexName: string; query: string; topK?: number; }
 export interface QueryByIdRequest { id: string; }
 export interface ServingInvokeRequest { endpoint: string; input: unknown; }
