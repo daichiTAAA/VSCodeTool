@@ -53,7 +53,8 @@ export class SqlTool implements vscode.LanguageModelTool<ISqlParams> {
       const statementId = (initial?.statement_id ?? initial?.statementId) as string | undefined;
       let state = (initial?.status?.state ?? initial?.state) as string | undefined;
       let current: any = initial;
-      const deadline = Date.now() + 25_000;
+      const maxWait = cfg.get<number>('sqlMaxWaitMs', 90_000);
+      const deadline = Date.now() + Math.max(10_000, maxWait);
       while (!token.isCancellationRequested && statementId && state && !['SUCCEEDED', 'FAILED', 'CANCELED'].includes(state) && Date.now() < deadline) {
         await new Promise((r) => setTimeout(r, 1000));
         current = await gateway.getStatement(statementId);

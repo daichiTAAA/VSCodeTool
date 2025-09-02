@@ -74,7 +74,8 @@ class SqlTool {
             const statementId = (initial?.statement_id ?? initial?.statementId);
             let state = (initial?.status?.state ?? initial?.state);
             let current = initial;
-            const deadline = Date.now() + 25_000;
+            const maxWait = cfg.get('sqlMaxWaitMs', 90_000);
+            const deadline = Date.now() + Math.max(10_000, maxWait);
             while (!token.isCancellationRequested && statementId && state && !['SUCCEEDED', 'FAILED', 'CANCELED'].includes(state) && Date.now() < deadline) {
                 await new Promise((r) => setTimeout(r, 1000));
                 current = await gateway.getStatement(statementId);

@@ -24,8 +24,8 @@
         },
         "databricks-knowledge-search.timeout": {
           "type": "number",
-          "default": 10000,
-          "description": "HTTP リクエストのタイムアウト (ms)"
+          "default": 30000,
+          "description": "HTTP リクエストのタイムアウト (ms)。SQLの初回POSTやステータス取得の各リクエストに適用されます。"
         },
         "databricks-knowledge-search.authToken": {
           "type": "string",
@@ -36,6 +36,11 @@
           "type": "string",
           "default": "",
           "description": "任意: dbxSql で未指定のときに使用するデフォルトの warehouse_id"
+        },
+        "databricks-knowledge-search.sqlMaxWaitMs": {
+          "type": "number",
+          "default": 90000,
+          "description": "SQL 実行完了までのポーリング最大待ち時間 (ms)。waitTimeout 経過後にステータスをポーリングする合計時間の上限です。"
         }
       }
     },

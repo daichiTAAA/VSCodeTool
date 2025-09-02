@@ -4,8 +4,10 @@ Azure Databricks のナレッジベースに VS Code からクエリするため
 
 ### 設定
 - `databricks-knowledge-search.gatewayUrl`: Gateway API のベースURL (例: `https://api.company.com/knowledge`)
-- `databricks-knowledge-search.timeout`: タイムアウト (ms)
+- `databricks-knowledge-search.timeout`: HTTP リクエストのタイムアウト (ms)。既定 30000
 - `databricks-knowledge-search.authToken`: 任意の Bearer トークン (企業の OAuth/SSO を使用する場合は空)
+- `databricks-knowledge-search.defaultWarehouseId`: 任意。`dbxSql` で warehouseId 未指定時の既定
+- `databricks-knowledge-search.sqlMaxWaitMs`: SQL ポーリング最大待ち時間 (ms)。既定 90000
 
 ### ツール一覧
 - `dbxSql` (`databricks-knowledge-search_sql`): SQL 実行（ハイブリッド/EXTERNAL_LINKS対応）
