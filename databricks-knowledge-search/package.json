@@ -4,6 +4,7 @@
   "displayName": "Databricks Knowledge Search",
   "description": "Azure Databricks ナレッジベース検索ツール (LM Tools)",
   "version": "1.0.0",
+  "repository": "https://github.com/daichiTAAA/VSCodeTool",
   "engines": {
     "vscode": "^1.100.0"
   },
