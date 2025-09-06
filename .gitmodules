@@ -7,3 +7,6 @@
 [submodule "vscode-docs"]
 	path = vscode-docs
 	url = https://github.com/microsoft/vscode-docs.git
+[submodule "databricks-sdk-py"]
+	path = databricks-sdk-py
+	url = https://github.com/databricks/databricks-sdk-py.git
